@@ -483,7 +483,7 @@ petsc_options_value_prec = 'lu NONZERO'
     [push_T]
         type = MultiAppGeneralFieldShapeEvaluationTransfer
         to_multi_app = Squirrel 
-        source_variable = T 
+        source_variable = T_fluid 
         variable = T
         execute_on= "timestep_end initial"
     [] 
