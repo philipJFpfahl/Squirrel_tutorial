@@ -219,4 +219,8 @@ lambda6 = 2.91303
   lambda = ${lambda6}
   execute_on = 'initial timestep_end'
  [] 
+ [rho_insertion]
+   type = FunctionValuePostprocessor
+   function = insertion_func
+ []
 []
