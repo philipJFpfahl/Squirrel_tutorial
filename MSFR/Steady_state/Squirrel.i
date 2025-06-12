@@ -1,5 +1,4 @@
-#rho_external = ${fparse 2.022985e-03}
-rho_external = ${fparse 1.932381e-03+1.461588e-05 }
+rho_external = ${fparse 1.180563e-03 }
 LAMBDA = 8.57e-7
 beta =0.0030207957
 lambda1 = 0.0133104
