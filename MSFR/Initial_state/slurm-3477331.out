@@ -1,0 +1,2316 @@
+
+[33m
+*** Warning, This code is deprecated and will be removed in future versions:
+Please update your main.C to adapt new main function in MOOSE framework, see'test/src/main.C in MOOSE as an example of moose::main()'. [39m
+
+
+[33m
+*** Warning, This code is deprecated and will be removed in future versions:
+"registerAll" in Modules is deprecated. Please update your *App.C file(s) to call the new templated "registerAllObjects" method (e.g. ModulesApp::registerAllObjects<MyApp>(...))[39m
+
+Setting Up                                                                               [[33m 11.43 s[39m] [[33m  259 MB[39m]
+
+Framework Information:
+MOOSE Version:           git commit a7f2041 on 2024-11-27
+LibMesh Version:         5483644b60cc538a4b54d312f28835bd94107627
+PETSc Version:           3.22.1
+SLEPc Version:           3.22.1
+Current Time:            Wed May 21 13:49:26 2025
+Executable Timestamp:    Fri Nov 29 16:38:56 2024
+
+Checkpoint:
+  Wall Time Interval:      Every 3600 s
+  User Checkpoint:         Disabled
+  # Checkpoints Kept:      2
+  Execute On:              TIMESTEP_END 
+
+Parallelism:
+  Num Processors:          64
+  Num Threads:             1
+
+Mesh: 
+  Parallel Type:           replicated
+  Mesh Dimension:          2
+  Spatial Dimension:       2
+  Nodes:                   
+    Total:                 2200
+    Local:                 46
+    Min/Max/Avg:           23/47/34
+  Elems:                   
+    Total:                 2068
+    Local:                 32
+    Min/Max/Avg:           32/33/32
+  Num Subdomains:          3
+  Num Partitions:          64
+  Partitioner:             metis
+
+Nonlinear System 0:
+  Num DOFs:                8273
+  Num Local DOFs:          128
+  Variables:               { "vel_x" "vel_y" "pressure" } "lambda" "T_fluid" 
+  Finite Element Types:    "MONOMIAL" "SCALAR" "MONOMIAL" 
+  Approximation Orders:    "CONSTANT" "FIRST" "CONSTANT" 
+
+Nonlinear System 1:
+  Num DOFs:                2068
+  Num Local DOFs:          32
+  Variables:               "c1" 
+  Finite Element Types:    "MONOMIAL" 
+  Approximation Orders:    "CONSTANT" 
+
+Nonlinear System 2:
+  Num DOFs:                2068
+  Num Local DOFs:          32
+  Variables:               "c2" 
+  Finite Element Types:    "MONOMIAL" 
+  Approximation Orders:    "CONSTANT" 
+
+Nonlinear System 3:
+  Num DOFs:                2068
+  Num Local DOFs:          32
+  Variables:               "c3" 
+  Finite Element Types:    "MONOMIAL" 
+  Approximation Orders:    "CONSTANT" 
+
+Nonlinear System 4:
+  Num DOFs:                2068
+  Num Local DOFs:          32
+  Variables:               "c4" 
+  Finite Element Types:    "MONOMIAL" 
+  Approximation Orders:    "CONSTANT" 
+
+Nonlinear System 5:
+  Num DOFs:                2068
+  Num Local DOFs:          32
+  Variables:               "c5" 
+  Finite Element Types:    "MONOMIAL" 
+  Approximation Orders:    "CONSTANT" 
+
+Nonlinear System 6:
+  Num DOFs:                2068
+  Num Local DOFs:          32
+  Variables:               "c6" 
+  Finite Element Types:    "MONOMIAL" 
+  Approximation Orders:    "CONSTANT" 
+
+Auxiliary System:
+  Num DOFs:                8272
+  Num Local DOFs:          128
+  Variables:               "mixing_length" { "power_density" "fission_source" "flux" } 
+  Finite Element Types:    "MONOMIAL" "MONOMIAL" 
+  Approximation Orders:    "CONSTANT" "CONSTANT" 
+
+Execution Information:
+  Executioner:             Transient
+  TimeStepper:             IterationAdaptiveDT
+  TimeIntegrator(s):       ImplicitEuler
+  Solver Mode:             NEWTON
+  PETSc Preconditioner:    lu mat_superlu_dist_fact: SamePattern  mat_superlu_dist_replacetinypivot: true 
+  MOOSE Preconditioner 0:  SMP
+
+  MOOSE Preconditioner 1:  SMP
+
+  MOOSE Preconditioner 2:  SMP
+
+  MOOSE Preconditioner 3:  SMP
+
+  MOOSE Preconditioner 4:  SMP
+
+  MOOSE Preconditioner 5:  SMP
+
+  MOOSE Preconditioner 6:  SMP
+
+[31mLEGACY MODES ENABLED:[39m
+ This application uses the legacy material output option: material properties are output only on TIMESTEP_END, not INITIAL. To remove this message, set 'use_legacy_material_output' to false in this application. If there are gold output files that contain material property output for which output occurs on INITIAL, then these will generate diffs due to zero values being stored, and these tests should be re-golded.
+[39m
+[31mLEGACY MODES ENABLED:[39m
+ This application uses the legacy initial residual evaluation behavior. The legacy behavior performs an often times redundant residual evaluation before the solution modifying objects are executed prior to the initial (0th nonlinear iteration) residual evaluation. The new behavior skips that redundant residual evaluation unless the parameter Executioner/use_pre_smo_residual is set to true. To remove this message and enable the new behavior, set the parameter 'use_legacy_initial_residual_evaluation_behavior' to false in *App.C. Some tests that rely on the side effects of the legacy behavior may fail/diff and should be re-golded.
+[39m
+
+
+
+Time Step 0, time = 0
+
+Postprocessor Values:
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+| time           | dT             | flow_hx_bot    | flow_hx_top    | max_flow_T     | max_v          | min_flow_T     |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
++----------------+----------------------+----------------+
+| time           | total_fission_source | total_power    |
++----------------+----------------------+----------------+
+|   0.000000e+00 |         0.000000e+00 |   0.000000e+00 |
++----------------+----------------------+----------------+
+
+
+Scalar Variable Values:
++----------------+----------------+
+| time           | lambda         |
++----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |
++----------------+----------------+
+
+
+Time Step 1, time = 0.001, dt = 0.001
+
+Pre-SMO residual: 7.83704e+09
+
+Performing automatic scaling calculation
+
+
+ 0 Nonlinear |R| = [32m7.837044e+09[39m
+ 1 Nonlinear |R| = [32m1.450511e+08[39m
+ 2 Nonlinear |R| = [32m1.771785e+03[39m
+ 3 Nonlinear |R| = [32m6.897479e-03[39m
+
+Currently Executing
+  Finished Solving                                                                       [[33m 12.81 s[39m] [[33m  363 MB[39m]
+
+[32mSystem nl0: Solve Converged![39m
+
+Pre-SMO residual: 0.000114234
+
+Performing automatic scaling calculation
+
+
+ 0 Nonlinear |R| = [32m1.355514e-05[39m
+ 1 Nonlinear |R| = [32m8.683977e-18[39m
+
+[32mSystem prec1: Solve Converged![39m
+
+Pre-SMO residual: 0.000859516
+
+Performing automatic scaling calculation
+
+
+ 0 Nonlinear |R| = [32m1.019891e-04[39m
+ 1 Nonlinear |R| = [32m4.396539e-17[39m
+
+[32mSystem prec2: Solve Converged![39m
+
+Pre-SMO residual: 0.000501732
+
+Performing automatic scaling calculation
+
+
+ 0 Nonlinear |R| = [32m5.952994e-05[39m
+ 1 Nonlinear |R| = [32m1.295296e-17[39m
+
+[32mSystem prec3: Solve Converged![39m
+
+Pre-SMO residual: 0.000739781
+
+Performing automatic scaling calculation
+
+
+ 0 Nonlinear |R| = [32m8.775780e-05[39m
+ 1 Nonlinear |R| = [32m1.716531e-17[39m
+
+[32mSystem prec4: Solve Converged![39m
+
+Pre-SMO residual: 0.000213287
+
+Performing automatic scaling calculation
+
+
+ 0 Nonlinear |R| = [32m2.528695e-05[39m
+ 1 Nonlinear |R| = [32m4.232932e-18[39m
+
+[32mSystem prec5: Solve Converged![39m
+
+Pre-SMO residual: 7.39249e-05
+
+Performing automatic scaling calculation
+
+
+ 0 Nonlinear |R| = [32m8.746637e-06[39m
+ 1 Nonlinear |R| = [32m4.116512e-19[39m
+
+[32mSystem prec6: Solve Converged![39m
+
+
+Outlier Variable Residual Norms:
+  T_fluid: [31m6.897479e-03[39m
+
+Postprocessor Values:
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+| time           | dT             | flow_hx_bot    | flow_hx_top    | max_flow_T     | max_v          | min_flow_T     |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.729870e-06 |  -1.178743e-03 |   1.178743e-03 |   1.029220e+00 |   7.486756e-04 |  -1.029220e+00 |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
++----------------+----------------------+----------------+
+| time           | total_fission_source | total_power    |
++----------------+----------------------+----------------+
+|   0.000000e+00 |         0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |         6.224151e+01 |   3.051908e+09 |
++----------------+----------------------+----------------+
+
+
+Scalar Variable Values:
++----------------+----------------+
+| time           | lambda         |
++----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.724615e-17 |
++----------------+----------------+
+
+
+
+
+Time Step 2, time = 0.003, dt = 0.002
+
+Pre-SMO residual: 7.89754e+09
+
+ 0 Nonlinear |R| = [32m7.897544e+09[39m
+ 1 Nonlinear |R| = [32m1.889300e+05[39m
+ 2 Nonlinear |R| = [32m3.778002e-02[39m
+
+[32mSystem nl0: Solve Converged![39m
+
+  Finished Solving                                                                       [[33m  9.22 s[39m] [[33m  354 MB[39m]
+
+Pre-SMO residual: 1.35516e-05
+
+ 0 Nonlinear |R| = [32m1.355156e-05[39m
+ 1 Nonlinear |R| = [32m4.359033e-18[39m
+
+[32mSystem prec1: Solve Converged![39m
+
+Pre-SMO residual: 0.000101966
+
+ 0 Nonlinear |R| = [32m1.019656e-04[39m
+ 1 Nonlinear |R| = [32m2.218869e-17[39m
+
+[32mSystem prec2: Solve Converged![39m
+
+Pre-SMO residual: 5.95157e-05
+
+ 0 Nonlinear |R| = [32m5.951571e-05[39m
+ 1 Nonlinear |R| = [32m6.359089e-18[39m
+
+[32mSystem prec3: Solve Converged![39m
+
+Pre-SMO residual: 8.772e-05
+
+ 0 Nonlinear |R| = [32m8.772003e-05[39m
+ 1 Nonlinear |R| = [32m8.900518e-18[39m
+
+[32mSystem prec4: Solve Converged![39m
+
+Pre-SMO residual: 2.5261e-05
+
+ 0 Nonlinear |R| = [32m2.526100e-05[39m
+ 1 Nonlinear |R| = [32m2.183506e-18[39m
+
+[32mSystem prec5: Solve Converged![39m
+
+Pre-SMO residual: 8.72085e-06
+
+ 0 Nonlinear |R| = [32m8.720846e-06[39m
+ 1 Nonlinear |R| = [32m2.082540e-19[39m
+
+[32mSystem prec6: Solve Converged![39m
+
+
+Outlier Variable Residual Norms:
+  T_fluid: [31m3.778002e-02[39m
+
+Postprocessor Values:
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+| time           | dT             | flow_hx_bot    | flow_hx_top    | max_flow_T     | max_v          | min_flow_T     |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.729870e-06 |  -1.178743e-03 |   1.178743e-03 |   1.029220e+00 |   7.486756e-04 |  -1.029220e+00 |
+|   3.000000e-03 |  -2.908639e-05 |  -3.532709e-03 |   3.532709e-03 |   3.084585e+00 |   2.249414e-03 |  -3.084585e+00 |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
++----------------+----------------------+----------------+
+| time           | total_fission_source | total_power    |
++----------------+----------------------+----------------+
+|   0.000000e+00 |         0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   3.000000e-03 |         6.224151e+01 |   3.051908e+09 |
++----------------+----------------------+----------------+
+
+
+Scalar Variable Values:
++----------------+----------------+
+| time           | lambda         |
++----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.724615e-17 |
+|   3.000000e-03 |  -2.798410e-16 |
++----------------+----------------+
+
+
+
+
+Time Step 3, time = 0.007, dt = 0.004
+
+Pre-SMO residual: 8.24543e+09
+
+ 0 Nonlinear |R| = [32m8.245432e+09[39m
+ 1 Nonlinear |R| = [32m4.727456e+05[39m
+ 2 Nonlinear |R| = [32m2.289475e+01[39m
+
+  Finished Solving                                                                       [[33m  6.47 s[39m] [[33m  355 MB[39m]
+
+[32mSystem nl0: Solve Converged![39m
+
+Pre-SMO residual: 1.35497e-05
+
+ 0 Nonlinear |R| = [32m1.354969e-05[39m
+ 1 Nonlinear |R| = [32m2.149502e-18[39m
+
+[32mSystem prec1: Solve Converged![39m
+
+Pre-SMO residual: 0.000101936
+
+ 0 Nonlinear |R| = [32m1.019360e-04[39m
+ 1 Nonlinear |R| = [32m1.138411e-17[39m
+
+[32mSystem prec2: Solve Converged![39m
+
+Pre-SMO residual: 5.949e-05
+
+ 0 Nonlinear |R| = [32m5.948995e-05[39m
+ 1 Nonlinear |R| = [32m3.156379e-18[39m
+
+[32mSystem prec3: Solve Converged![39m
+
+Pre-SMO residual: 8.76477e-05
+
+ 0 Nonlinear |R| = [32m8.764775e-05[39m
+ 1 Nonlinear |R| = [32m4.361215e-18[39m
+
+[32mSystem prec4: Solve Converged![39m
+
+Pre-SMO residual: 2.52098e-05
+
+ 0 Nonlinear |R| = [32m2.520985e-05[39m
+ 1 Nonlinear |R| = [32m1.079082e-18[39m
+
+[32mSystem prec5: Solve Converged![39m
+
+Pre-SMO residual: 8.66956e-06
+
+ 0 Nonlinear |R| = [32m8.669564e-06[39m
+ 1 Nonlinear |R| = [32m1.049444e-19[39m
+
+[32mSystem prec6: Solve Converged![39m
+
+
+Outlier Variable Residual Norms:
+  T_fluid: [31m2.289475e+01[39m
+
+Postprocessor Values:
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+| time           | dT             | flow_hx_bot    | flow_hx_top    | max_flow_T     | max_v          | min_flow_T     |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.729870e-06 |  -1.178743e-03 |   1.178743e-03 |   1.029220e+00 |   7.486756e-04 |  -1.029220e+00 |
+|   3.000000e-03 |  -2.908639e-05 |  -3.532709e-03 |   3.532709e-03 |   3.084585e+00 |   2.249414e-03 |  -3.084585e+00 |
+|   7.000000e-03 |  -6.738377e-05 |  -8.241347e-03 |   8.241347e-03 |   7.195932e+00 |   5.249190e-03 |  -7.195933e+00 |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
++----------------+----------------------+----------------+
+| time           | total_fission_source | total_power    |
++----------------+----------------------+----------------+
+|   0.000000e+00 |         0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   3.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   7.000000e-03 |         6.224151e+01 |   3.051908e+09 |
++----------------+----------------------+----------------+
+
+
+Scalar Variable Values:
++----------------+----------------+
+| time           | lambda         |
++----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.724615e-17 |
+|   3.000000e-03 |  -2.798410e-16 |
+|   7.000000e-03 |   4.172850e-16 |
++----------------+----------------+
+
+
+
+
+Time Step 4, time = 0.015, dt = 0.008
+
+Pre-SMO residual: 9.59668e+09
+
+ 0 Nonlinear |R| = [32m9.596679e+09[39m
+ 1 Nonlinear |R| = [32m1.160936e+06[39m
+ 2 Nonlinear |R| = [32m3.272055e+03[39m
+ 3 Nonlinear |R| = [32m1.966357e-03[39m
+
+[32mSystem nl0: Solve Converged![39m
+
+  Finished Solving                                                                       [[33m 12.49 s[39m] [[33m  364 MB[39m]
+
+Pre-SMO residual: 1.35672e-05
+
+ 0 Nonlinear |R| = [32m1.356719e-05[39m
+ 1 Nonlinear |R| = [32m1.093595e-18[39m
+
+[32mSystem prec1: Solve Converged![39m
+
+Pre-SMO residual: 0.000101947
+
+ 0 Nonlinear |R| = [32m1.019475e-04[39m
+ 1 Nonlinear |R| = [32m5.534902e-18[39m
+
+[32mSystem prec2: Solve Converged![39m
+
+Pre-SMO residual: 5.94492e-05
+
+ 0 Nonlinear |R| = [32m5.944925e-05[39m
+ 1 Nonlinear |R| = [32m1.640399e-18[39m
+
+[32mSystem prec3: Solve Converged![39m
+
+Pre-SMO residual: 8.75162e-05
+
+ 0 Nonlinear |R| = [32m8.751620e-05[39m
+ 1 Nonlinear |R| = [32m2.211435e-18[39m
+
+[32mSystem prec4: Solve Converged![39m
+
+Pre-SMO residual: 2.51105e-05
+
+ 0 Nonlinear |R| = [32m2.511051e-05[39m
+ 1 Nonlinear |R| = [32m5.542718e-19[39m
+
+[32mSystem prec5: Solve Converged![39m
+
+Pre-SMO residual: 8.56819e-06
+
+ 0 Nonlinear |R| = [32m8.568189e-06[39m
+ 1 Nonlinear |R| = [32m5.398162e-20[39m
+
+[32mSystem prec6: Solve Converged![39m
+
+
+Outlier Variable Residual Norms:
+  T_fluid: [31m1.966357e-03[39m
+
+Postprocessor Values:
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+| time           | dT             | flow_hx_bot    | flow_hx_top    | max_flow_T     | max_v          | min_flow_T     |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.729870e-06 |  -1.178743e-03 |   1.178743e-03 |   1.029220e+00 |   7.486756e-04 |  -1.029220e+00 |
+|   3.000000e-03 |  -2.908639e-05 |  -3.532709e-03 |   3.532709e-03 |   3.084585e+00 |   2.249414e-03 |  -3.084585e+00 |
+|   7.000000e-03 |  -6.738377e-05 |  -8.241347e-03 |   8.241347e-03 |   7.195932e+00 |   5.249190e-03 |  -7.195933e+00 |
+|   1.500000e-02 |  -1.423355e-04 |  -1.766442e-02 |   1.766442e-02 |   1.542369e+01 |   1.123962e-02 |  -1.542369e+01 |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
++----------------+----------------------+----------------+
+| time           | total_fission_source | total_power    |
++----------------+----------------------+----------------+
+|   0.000000e+00 |         0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   3.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   7.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   1.500000e-02 |         6.224151e+01 |   3.051908e+09 |
++----------------+----------------------+----------------+
+
+
+Scalar Variable Values:
++----------------+----------------+
+| time           | lambda         |
++----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.724615e-17 |
+|   3.000000e-03 |  -2.798410e-16 |
+|   7.000000e-03 |   4.172850e-16 |
+|   1.500000e-02 |   3.160875e-15 |
++----------------+----------------+
+
+
+
+
+Time Step 5, time = 0.031, dt = 0.016
+
+Pre-SMO residual: 1.36408e+10
+
+ 0 Nonlinear |R| = [32m1.364079e+10[39m
+ 1 Nonlinear |R| = [32m4.257142e+06[39m
+ 2 Nonlinear |R| = [32m1.065908e+05[39m
+ 3 Nonlinear |R| = [32m1.146942e-02[39m
+
+[32mSystem nl0: Solve Converged![39m
+
+  Finished Solving                                                                       [[33m 10.73 s[39m] [[33m  363 MB[39m]
+
+Pre-SMO residual: 1.3687e-05
+
+ 0 Nonlinear |R| = [32m1.368702e-05[39m
+ 1 Nonlinear |R| = [32m5.314559e-19[39m
+
+[32mSystem prec1: Solve Converged![39m
+
+Pre-SMO residual: 0.000102254
+
+ 0 Nonlinear |R| = [32m1.022539e-04[39m
+ 1 Nonlinear |R| = [32m2.792505e-18[39m
+
+[32mSystem prec2: Solve Converged![39m
+
+Pre-SMO residual: 5.94115e-05
+
+ 0 Nonlinear |R| = [32m5.941147e-05[39m
+ 1 Nonlinear |R| = [32m8.018274e-19[39m
+
+[32mSystem prec3: Solve Converged![39m
+
+Pre-SMO residual: 8.73057e-05
+
+ 0 Nonlinear |R| = [32m8.730571e-05[39m
+ 1 Nonlinear |R| = [32m1.128875e-18[39m
+
+[32mSystem prec4: Solve Converged![39m
+
+Pre-SMO residual: 2.49238e-05
+
+ 0 Nonlinear |R| = [32m2.492384e-05[39m
+ 1 Nonlinear |R| = [32m2.747114e-19[39m
+
+[32mSystem prec5: Solve Converged![39m
+
+Pre-SMO residual: 8.37011e-06
+
+ 0 Nonlinear |R| = [32m8.370109e-06[39m
+ 1 Nonlinear |R| = [32m2.819300e-20[39m
+
+[32mSystem prec6: Solve Converged![39m
+
+
+Outlier Variable Residual Norms:
+  T_fluid: [31m1.146942e-02[39m
+
+Postprocessor Values:
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+| time           | dT             | flow_hx_bot    | flow_hx_top    | max_flow_T     | max_v          | min_flow_T     |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.729870e-06 |  -1.178743e-03 |   1.178743e-03 |   1.029220e+00 |   7.486756e-04 |  -1.029220e+00 |
+|   3.000000e-03 |  -2.908639e-05 |  -3.532709e-03 |   3.532709e-03 |   3.084585e+00 |   2.249414e-03 |  -3.084585e+00 |
+|   7.000000e-03 |  -6.738377e-05 |  -8.241347e-03 |   8.241347e-03 |   7.195932e+00 |   5.249190e-03 |  -7.195933e+00 |
+|   1.500000e-02 |  -1.423355e-04 |  -1.766442e-02 |   1.766442e-02 |   1.542369e+01 |   1.123962e-02 |  -1.542369e+01 |
+|   3.100000e-02 |  -2.858381e-04 |  -3.653318e-02 |   3.653318e-02 |   3.189895e+01 |   2.315632e-02 |  -3.189896e+01 |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
++----------------+----------------------+----------------+
+| time           | total_fission_source | total_power    |
++----------------+----------------------+----------------+
+|   0.000000e+00 |         0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   3.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   7.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   1.500000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   3.100000e-02 |         6.224151e+01 |   3.051908e+09 |
++----------------+----------------------+----------------+
+
+
+Scalar Variable Values:
++----------------+----------------+
+| time           | lambda         |
++----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.724615e-17 |
+|   3.000000e-03 |  -2.798410e-16 |
+|   7.000000e-03 |   4.172850e-16 |
+|   1.500000e-02 |   3.160875e-15 |
+|   3.100000e-02 |   7.538617e-15 |
++----------------+----------------+
+
+
+
+
+Time Step 6, time = 0.063, dt = 0.032
+
+Pre-SMO residual: 2.22135e+10
+
+ 0 Nonlinear |R| = [32m2.221352e+10[39m
+ 1 Nonlinear |R| = [32m1.310474e+08[39m
+ 2 Nonlinear |R| = [32m3.019707e+06[39m
+ 3 Nonlinear |R| = [32m1.645824e+01[39m
+
+[32mSystem nl0: Solve Converged![39m
+
+  Finished Solving                                                                       [[33m 11.04 s[39m] [[33m  361 MB[39m]
+
+Pre-SMO residual: 1.42565e-05
+
+ 0 Nonlinear |R| = [32m1.425650e-05[39m
+ 1 Nonlinear |R| = [32m2.779624e-19[39m
+
+[32mSystem prec1: Solve Converged![39m
+
+Pre-SMO residual: 0.000103998
+
+ 0 Nonlinear |R| = [32m1.039978e-04[39m
+ 1 Nonlinear |R| = [32m1.412111e-18[39m
+
+[32mSystem prec2: Solve Converged![39m
+
+Pre-SMO residual: 5.95132e-05
+
+ 0 Nonlinear |R| = [32m5.951316e-05[39m
+ 1 Nonlinear |R| = [32m4.154747e-19[39m
+
+[32mSystem prec3: Solve Converged![39m
+
+Pre-SMO residual: 8.7099e-05
+
+ 0 Nonlinear |R| = [32m8.709899e-05[39m
+ 1 Nonlinear |R| = [32m5.732734e-19[39m
+
+[32mSystem prec4: Solve Converged![39m
+
+Pre-SMO residual: 2.45996e-05
+
+ 0 Nonlinear |R| = [32m2.459962e-05[39m
+ 1 Nonlinear |R| = [32m1.470015e-19[39m
+
+[32mSystem prec5: Solve Converged![39m
+
+Pre-SMO residual: 7.99197e-06
+
+ 0 Nonlinear |R| = [32m7.991969e-06[39m
+ 1 Nonlinear |R| = [32m1.574530e-20[39m
+
+[32mSystem prec6: Solve Converged![39m
+
+
+Outlier Variable Residual Norms:
+  T_fluid: [31m1.645824e+01[39m
+
+Postprocessor Values:
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+| time           | dT             | flow_hx_bot    | flow_hx_top    | max_flow_T     | max_v          | min_flow_T     |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.729870e-06 |  -1.178743e-03 |   1.178743e-03 |   1.029220e+00 |   7.486756e-04 |  -1.029220e+00 |
+|   3.000000e-03 |  -2.908639e-05 |  -3.532709e-03 |   3.532709e-03 |   3.084585e+00 |   2.249414e-03 |  -3.084585e+00 |
+|   7.000000e-03 |  -6.738377e-05 |  -8.241347e-03 |   8.241347e-03 |   7.195932e+00 |   5.249190e-03 |  -7.195933e+00 |
+|   1.500000e-02 |  -1.423355e-04 |  -1.766442e-02 |   1.766442e-02 |   1.542369e+01 |   1.123962e-02 |  -1.542369e+01 |
+|   3.100000e-02 |  -2.858381e-04 |  -3.653318e-02 |   3.653318e-02 |   3.189895e+01 |   2.315632e-02 |  -3.189896e+01 |
+|   6.300000e-02 |  -5.485262e-04 |  -7.435099e-02 |   7.435099e-02 |   6.491959e+01 |   4.656554e-02 |  -6.491963e+01 |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
++----------------+----------------------+----------------+
+| time           | total_fission_source | total_power    |
++----------------+----------------------+----------------+
+|   0.000000e+00 |         0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   3.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   7.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   1.500000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   3.100000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   6.300000e-02 |         6.224151e+01 |   3.051908e+09 |
++----------------+----------------------+----------------+
+
+
+Scalar Variable Values:
++----------------+----------------+
+| time           | lambda         |
++----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.724615e-17 |
+|   3.000000e-03 |  -2.798410e-16 |
+|   7.000000e-03 |   4.172850e-16 |
+|   1.500000e-02 |   3.160875e-15 |
+|   3.100000e-02 |   7.538617e-15 |
+|   6.300000e-02 |   1.509634e-14 |
++----------------+----------------+
+
+
+
+
+Time Step 7, time = 0.127, dt = 0.064
+
+Pre-SMO residual: 3.31115e+10
+
+ 0 Nonlinear |R| = [32m3.311152e+10[39m
+ 1 Nonlinear |R| = [32m9.715073e+08[39m
+ 2 Nonlinear |R| = [32m4.682905e+07[39m
+ 3 Nonlinear |R| = [32m2.133486e+04[39m
+ 4 Nonlinear |R| = [32m1.527122e-02[39m
+
+[32mSystem nl0: Solve Converged![39m
+
+  Finished Solving                                                                       [[33m 19.48 s[39m] [[33m  363 MB[39m]
+
+Pre-SMO residual: 1.65366e-05
+
+ 0 Nonlinear |R| = [32m1.653659e-05[39m
+ 1 Nonlinear |R| = [32m1.551233e-19[39m
+
+[32mSystem prec1: Solve Converged![39m
+
+Pre-SMO residual: 0.000111787
+
+ 0 Nonlinear |R| = [32m1.117870e-04[39m
+ 1 Nonlinear |R| = [32m7.917153e-19[39m
+
+[32mSystem prec2: Solve Converged![39m
+
+Pre-SMO residual: 6.04373e-05
+
+ 0 Nonlinear |R| = [32m6.043734e-05[39m
+ 1 Nonlinear |R| = [32m2.268022e-19[39m
+
+[32mSystem prec3: Solve Converged![39m
+
+Pre-SMO residual: 8.75643e-05
+
+ 0 Nonlinear |R| = [32m8.756429e-05[39m
+ 1 Nonlinear |R| = [32m3.340008e-19[39m
+
+[32mSystem prec4: Solve Converged![39m
+
+Pre-SMO residual: 2.41557e-05
+
+ 0 Nonlinear |R| = [32m2.415569e-05[39m
+ 1 Nonlinear |R| = [32m7.850899e-20[39m
+
+[32mSystem prec5: Solve Converged![39m
+
+Pre-SMO residual: 7.30325e-06
+
+ 0 Nonlinear |R| = [32m7.303252e-06[39m
+ 1 Nonlinear |R| = [32m9.908880e-21[39m
+
+[32mSystem prec6: Solve Converged![39m
+
+
+Outlier Variable Residual Norms:
+  T_fluid: [31m1.527122e-02[39m
+
+Postprocessor Values:
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+| time           | dT             | flow_hx_bot    | flow_hx_top    | max_flow_T     | max_v          | min_flow_T     |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.729870e-06 |  -1.178743e-03 |   1.178743e-03 |   1.029220e+00 |   7.486756e-04 |  -1.029220e+00 |
+|   3.000000e-03 |  -2.908639e-05 |  -3.532709e-03 |   3.532709e-03 |   3.084585e+00 |   2.249414e-03 |  -3.084585e+00 |
+|   7.000000e-03 |  -6.738377e-05 |  -8.241347e-03 |   8.241347e-03 |   7.195932e+00 |   5.249190e-03 |  -7.195933e+00 |
+|   1.500000e-02 |  -1.423355e-04 |  -1.766442e-02 |   1.766442e-02 |   1.542369e+01 |   1.123962e-02 |  -1.542369e+01 |
+|   3.100000e-02 |  -2.858381e-04 |  -3.653318e-02 |   3.653318e-02 |   3.189895e+01 |   2.315632e-02 |  -3.189896e+01 |
+|   6.300000e-02 |  -5.485262e-04 |  -7.435099e-02 |   7.435099e-02 |   6.491959e+01 |   4.656554e-02 |  -6.491963e+01 |
+|   1.270000e-01 |  -9.854256e-04 |  -1.502804e-01 |   1.502804e-01 |   1.312174e+02 |   9.148929e-02 |  -1.312176e+02 |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
++----------------+----------------------+----------------+
+| time           | total_fission_source | total_power    |
++----------------+----------------------+----------------+
+|   0.000000e+00 |         0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   3.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   7.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   1.500000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   3.100000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   6.300000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   1.270000e-01 |         6.224151e+01 |   3.051908e+09 |
++----------------+----------------------+----------------+
+
+
+Scalar Variable Values:
++----------------+----------------+
+| time           | lambda         |
++----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.724615e-17 |
+|   3.000000e-03 |  -2.798410e-16 |
+|   7.000000e-03 |   4.172850e-16 |
+|   1.500000e-02 |   3.160875e-15 |
+|   3.100000e-02 |   7.538617e-15 |
+|   6.300000e-02 |   1.509634e-14 |
+|   1.270000e-01 |   4.748190e-14 |
++----------------+----------------+
+
+
+
+
+Time Step 8, time = 0.255, dt = 0.128
+
+Pre-SMO residual: 3.67049e+10
+
+ 0 Nonlinear |R| = [32m3.670486e+10[39m
+ 1 Nonlinear |R| = [32m2.288133e+09[39m
+ 2 Nonlinear |R| = [32m9.005864e+07[39m
+ 3 Nonlinear |R| = [32m2.045953e+06[39m
+ 4 Nonlinear |R| = [32m1.854960e+02[39m
+
+[32mSystem nl0: Solve Converged![39m
+
+  Finished Solving                                                                       [[33m 16.80 s[39m] [[33m  368 MB[39m]
+
+Pre-SMO residual: 2.39553e-05
+
+ 0 Nonlinear |R| = [32m2.395535e-05[39m
+ 1 Nonlinear |R| = [32m1.231987e-19[39m
+
+[32mSystem prec1: Solve Converged![39m
+
+Pre-SMO residual: 0.000140989
+
+ 0 Nonlinear |R| = [32m1.409892e-04[39m
+ 1 Nonlinear |R| = [32m5.976470e-19[39m
+
+[32mSystem prec2: Solve Converged![39m
+
+Pre-SMO residual: 6.51093e-05
+
+ 0 Nonlinear |R| = [32m6.510935e-05[39m
+ 1 Nonlinear |R| = [32m1.748658e-19[39m
+
+[32mSystem prec3: Solve Converged![39m
+
+Pre-SMO residual: 9.20225e-05
+
+ 0 Nonlinear |R| = [32m9.202251e-05[39m
+ 1 Nonlinear |R| = [32m2.484786e-19[39m
+
+[32mSystem prec4: Solve Converged![39m
+
+Pre-SMO residual: 2.41256e-05
+
+ 0 Nonlinear |R| = [32m2.412555e-05[39m
+ 1 Nonlinear |R| = [32m6.871897e-20[39m
+
+[32mSystem prec5: Solve Converged![39m
+
+Pre-SMO residual: 6.168e-06
+
+ 0 Nonlinear |R| = [32m6.168003e-06[39m
+ 1 Nonlinear |R| = [32m8.278845e-21[39m
+
+[32mSystem prec6: Solve Converged![39m
+
+
+Outlier Variable Residual Norms:
+  T_fluid: [31m1.854960e+02[39m
+
+Postprocessor Values:
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+| time           | dT             | flow_hx_bot    | flow_hx_top    | max_flow_T     | max_v          | min_flow_T     |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.729870e-06 |  -1.178743e-03 |   1.178743e-03 |   1.029220e+00 |   7.486756e-04 |  -1.029220e+00 |
+|   3.000000e-03 |  -2.908639e-05 |  -3.532709e-03 |   3.532709e-03 |   3.084585e+00 |   2.249414e-03 |  -3.084585e+00 |
+|   7.000000e-03 |  -6.738377e-05 |  -8.241347e-03 |   8.241347e-03 |   7.195932e+00 |   5.249190e-03 |  -7.195933e+00 |
+|   1.500000e-02 |  -1.423355e-04 |  -1.766442e-02 |   1.766442e-02 |   1.542369e+01 |   1.123962e-02 |  -1.542369e+01 |
+|   3.100000e-02 |  -2.858381e-04 |  -3.653318e-02 |   3.653318e-02 |   3.189895e+01 |   2.315632e-02 |  -3.189896e+01 |
+|   6.300000e-02 |  -5.485262e-04 |  -7.435099e-02 |   7.435099e-02 |   6.491959e+01 |   4.656554e-02 |  -6.491963e+01 |
+|   1.270000e-01 |  -9.854256e-04 |  -1.502804e-01 |   1.502804e-01 |   1.312174e+02 |   9.148929e-02 |  -1.312176e+02 |
+|   2.550000e-01 |  -1.555749e-03 |  -3.031927e-01 |   3.031927e-01 |   2.647331e+02 |   1.794379e-01 |  -2.647336e+02 |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
++----------------+----------------------+----------------+
+| time           | total_fission_source | total_power    |
++----------------+----------------------+----------------+
+|   0.000000e+00 |         0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   3.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   7.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   1.500000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   3.100000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   6.300000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   1.270000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   2.550000e-01 |         6.224151e+01 |   3.051908e+09 |
++----------------+----------------------+----------------+
+
+
+Scalar Variable Values:
++----------------+----------------+
+| time           | lambda         |
++----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.724615e-17 |
+|   3.000000e-03 |  -2.798410e-16 |
+|   7.000000e-03 |   4.172850e-16 |
+|   1.500000e-02 |   3.160875e-15 |
+|   3.100000e-02 |   7.538617e-15 |
+|   6.300000e-02 |   1.509634e-14 |
+|   1.270000e-01 |   4.748190e-14 |
+|   2.550000e-01 |   1.395570e-09 |
++----------------+----------------+
+
+
+
+
+Time Step 9, time = 0.511, dt = 0.256
+
+Pre-SMO residual: 2.83668e+10
+
+ 0 Nonlinear |R| = [32m2.836681e+10[39m
+ 1 Nonlinear |R| = [32m6.711850e+09[39m
+ 2 Nonlinear |R| = [32m4.689842e+08[39m
+ 3 Nonlinear |R| = [32m3.244439e+07[39m
+ 4 Nonlinear |R| = [32m9.237433e+05[39m
+ 5 Nonlinear |R| = [32m7.859196e+01[39m
+
+[32mSystem nl0: Solve Converged![39m
+
+  Finished Solving                                                                       [[33m 19.07 s[39m] [[33m  359 MB[39m]
+
+Pre-SMO residual: 4.30893e-05
+
+ 0 Nonlinear |R| = [32m4.308932e-05[39m
+ 1 Nonlinear |R| = [32m1.872785e-19[39m
+
+[32mSystem prec1: Solve Converged![39m
+
+Pre-SMO residual: 0.000227785
+
+ 0 Nonlinear |R| = [32m2.277852e-04[39m
+ 1 Nonlinear |R| = [32m8.596213e-19[39m
+
+[32mSystem prec2: Solve Converged![39m
+
+Pre-SMO residual: 8.36443e-05
+
+ 0 Nonlinear |R| = [32m8.364427e-05[39m
+ 1 Nonlinear |R| = [32m2.712776e-19[39m
+
+[32mSystem prec3: Solve Converged![39m
+
+Pre-SMO residual: 0.000113036
+
+ 0 Nonlinear |R| = [32m1.130358e-04[39m
+ 1 Nonlinear |R| = [32m3.777437e-19[39m
+
+[32mSystem prec4: Solve Converged![39m
+
+Pre-SMO residual: 2.72666e-05
+
+ 0 Nonlinear |R| = [32m2.726657e-05[39m
+ 1 Nonlinear |R| = [32m9.564677e-20[39m
+
+[32mSystem prec5: Solve Converged![39m
+
+Pre-SMO residual: 4.71342e-06
+
+ 0 Nonlinear |R| = [32m4.713418e-06[39m
+ 1 Nonlinear |R| = [32m1.150897e-20[39m
+
+[32mSystem prec6: Solve Converged![39m
+
+
+Outlier Variable Residual Norms:
+  T_fluid: [31m7.859196e+01[39m
+
+Postprocessor Values:
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+| time           | dT             | flow_hx_bot    | flow_hx_top    | max_flow_T     | max_v          | min_flow_T     |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.729870e-06 |  -1.178743e-03 |   1.178743e-03 |   1.029220e+00 |   7.486756e-04 |  -1.029220e+00 |
+|   3.000000e-03 |  -2.908639e-05 |  -3.532709e-03 |   3.532709e-03 |   3.084585e+00 |   2.249414e-03 |  -3.084585e+00 |
+|   7.000000e-03 |  -6.738377e-05 |  -8.241347e-03 |   8.241347e-03 |   7.195932e+00 |   5.249190e-03 |  -7.195933e+00 |
+|   1.500000e-02 |  -1.423355e-04 |  -1.766442e-02 |   1.766442e-02 |   1.542369e+01 |   1.123962e-02 |  -1.542369e+01 |
+|   3.100000e-02 |  -2.858381e-04 |  -3.653318e-02 |   3.653318e-02 |   3.189895e+01 |   2.315632e-02 |  -3.189896e+01 |
+|   6.300000e-02 |  -5.485262e-04 |  -7.435099e-02 |   7.435099e-02 |   6.491959e+01 |   4.656554e-02 |  -6.491963e+01 |
+|   1.270000e-01 |  -9.854256e-04 |  -1.502804e-01 |   1.502804e-01 |   1.312174e+02 |   9.148929e-02 |  -1.312176e+02 |
+|   2.550000e-01 |  -1.555749e-03 |  -3.031927e-01 |   3.031927e-01 |   2.647331e+02 |   1.794379e-01 |  -2.647336e+02 |
+|   5.110000e-01 |  -1.741622e-03 |  -6.118046e-01 |   6.118046e-01 |   5.341988e+02 |   3.527705e-01 |  -5.341999e+02 |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
++----------------+----------------------+----------------+
+| time           | total_fission_source | total_power    |
++----------------+----------------------+----------------+
+|   0.000000e+00 |         0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   3.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   7.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   1.500000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   3.100000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   6.300000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   1.270000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   2.550000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   5.110000e-01 |         6.224151e+01 |   3.051908e+09 |
++----------------+----------------------+----------------+
+
+
+Scalar Variable Values:
++----------------+----------------+
+| time           | lambda         |
++----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.724615e-17 |
+|   3.000000e-03 |  -2.798410e-16 |
+|   7.000000e-03 |   4.172850e-16 |
+|   1.500000e-02 |   3.160875e-15 |
+|   3.100000e-02 |   7.538617e-15 |
+|   6.300000e-02 |   1.509634e-14 |
+|   1.270000e-01 |   4.748190e-14 |
+|   2.550000e-01 |   1.395570e-09 |
+|   5.110000e-01 |   1.955969e-10 |
++----------------+----------------+
+
+
+
+
+Time Step 10, time = 1.023, dt = 0.512
+
+Pre-SMO residual: 1.54624e+10
+
+ 0 Nonlinear |R| = [32m1.546244e+10[39m
+ 1 Nonlinear |R| = [32m1.191495e+10[39m
+ 2 Nonlinear |R| = [32m5.639995e+08[39m
+ 3 Nonlinear |R| = [32m3.876503e+07[39m
+ 4 Nonlinear |R| = [32m5.710440e+05[39m
+ 5 Nonlinear |R| = [32m1.062519e+01[39m
+
+  Finished Solving                                                                       [[33m 26.71 s[39m] [[33m  388 MB[39m]
+
+[32mSystem nl0: Solve Converged![39m
+
+Pre-SMO residual: 8.49886e-05
+
+ 0 Nonlinear |R| = [32m8.498861e-05[39m
+ 1 Nonlinear |R| = [32m3.998541e-19[39m
+
+[32mSystem prec1: Solve Converged![39m
+
+Pre-SMO residual: 0.000433095
+
+ 0 Nonlinear |R| = [32m4.330952e-04[39m
+ 1 Nonlinear |R| = [32m2.021123e-18[39m
+
+[32mSystem prec2: Solve Converged![39m
+
+Pre-SMO residual: 0.00013865
+
+ 0 Nonlinear |R| = [32m1.386495e-04[39m
+ 1 Nonlinear |R| = [32m6.142501e-19[39m
+
+[32mSystem prec3: Solve Converged![39m
+
+Pre-SMO residual: 0.000179783
+
+ 0 Nonlinear |R| = [32m1.797829e-04[39m
+ 1 Nonlinear |R| = [32m8.657588e-19[39m
+
+[32mSystem prec4: Solve Converged![39m
+
+Pre-SMO residual: 4.04072e-05
+
+ 0 Nonlinear |R| = [32m4.040722e-05[39m
+ 1 Nonlinear |R| = [32m2.006299e-19[39m
+
+[32mSystem prec5: Solve Converged![39m
+
+Pre-SMO residual: 4.14284e-06
+
+ 0 Nonlinear |R| = [32m4.142839e-06[39m
+ 1 Nonlinear |R| = [32m2.343751e-20[39m
+
+[32mSystem prec6: Solve Converged![39m
+
+
+Outlier Variable Residual Norms:
+  T_fluid: [31m1.062519e+01[39m
+
+Postprocessor Values:
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+| time           | dT             | flow_hx_bot    | flow_hx_top    | max_flow_T     | max_v          | min_flow_T     |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.729870e-06 |  -1.178743e-03 |   1.178743e-03 |   1.029220e+00 |   7.486756e-04 |  -1.029220e+00 |
+|   3.000000e-03 |  -2.908639e-05 |  -3.532709e-03 |   3.532709e-03 |   3.084585e+00 |   2.249414e-03 |  -3.084585e+00 |
+|   7.000000e-03 |  -6.738377e-05 |  -8.241347e-03 |   8.241347e-03 |   7.195932e+00 |   5.249190e-03 |  -7.195933e+00 |
+|   1.500000e-02 |  -1.423355e-04 |  -1.766442e-02 |   1.766442e-02 |   1.542369e+01 |   1.123962e-02 |  -1.542369e+01 |
+|   3.100000e-02 |  -2.858381e-04 |  -3.653318e-02 |   3.653318e-02 |   3.189895e+01 |   2.315632e-02 |  -3.189896e+01 |
+|   6.300000e-02 |  -5.485262e-04 |  -7.435099e-02 |   7.435099e-02 |   6.491959e+01 |   4.656554e-02 |  -6.491963e+01 |
+|   1.270000e-01 |  -9.854256e-04 |  -1.502804e-01 |   1.502804e-01 |   1.312174e+02 |   9.148929e-02 |  -1.312176e+02 |
+|   2.550000e-01 |  -1.555749e-03 |  -3.031927e-01 |   3.031927e-01 |   2.647331e+02 |   1.794379e-01 |  -2.647336e+02 |
+|   5.110000e-01 |  -1.741622e-03 |  -6.118046e-01 |   6.118046e-01 |   5.341988e+02 |   3.527705e-01 |  -5.341999e+02 |
+|   1.023000e+00 |   2.658462e-03 |  -1.226309e+00 |   1.226309e+00 |   1.070762e+03 |   6.709617e-01 |  -1.070758e+03 |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
++----------------+----------------------+----------------+
+| time           | total_fission_source | total_power    |
++----------------+----------------------+----------------+
+|   0.000000e+00 |         0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   3.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   7.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   1.500000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   3.100000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   6.300000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   1.270000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   2.550000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   5.110000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   1.023000e+00 |         6.224151e+01 |   3.051908e+09 |
++----------------+----------------------+----------------+
+
+
+Scalar Variable Values:
++----------------+----------------+
+| time           | lambda         |
++----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.724615e-17 |
+|   3.000000e-03 |  -2.798410e-16 |
+|   7.000000e-03 |   4.172850e-16 |
+|   1.500000e-02 |   3.160875e-15 |
+|   3.100000e-02 |   7.538617e-15 |
+|   6.300000e-02 |   1.509634e-14 |
+|   1.270000e-01 |   4.748190e-14 |
+|   2.550000e-01 |   1.395570e-09 |
+|   5.110000e-01 |   1.955969e-10 |
+|   1.023000e+00 |  -6.505633e-14 |
++----------------+----------------+
+
+
+
+
+Time Step 11, time = 2.047, dt = 1.024
+
+Pre-SMO residual: 8.62485e+09
+
+ 0 Nonlinear |R| = [32m8.624854e+09[39m
+ 1 Nonlinear |R| = [31m2.176062e+10[39m
+ 2 Nonlinear |R| = [32m1.660570e+09[39m
+ 3 Nonlinear |R| = [31m2.865020e+09[39m
+ 4 Nonlinear |R| = [32m1.712763e+08[39m
+ 5 Nonlinear |R| = [31m1.453442e+09[39m
+ 6 Nonlinear |R| = [32m1.903124e+08[39m
+ 7 Nonlinear |R| = [32m1.454302e+07[39m
+ 8 Nonlinear |R| = [32m2.920465e+04[39m
+ 9 Nonlinear |R| = [32m3.475502e-02[39m
+
+[32mSystem nl0: Solve Converged![39m
+
+  Finished Solving                                                                       [[33m 50.60 s[39m] [[33m  381 MB[39m]
+
+Pre-SMO residual: 0.000150159
+
+ 0 Nonlinear |R| = [32m1.501588e-04[39m
+ 1 Nonlinear |R| = [32m1.065855e-18[39m
+
+[32mSystem prec1: Solve Converged![39m
+
+Pre-SMO residual: 0.000763443
+
+ 0 Nonlinear |R| = [32m7.634432e-04[39m
+ 1 Nonlinear |R| = [32m5.214775e-18[39m
+
+[32mSystem prec2: Solve Converged![39m
+
+Pre-SMO residual: 0.000237446
+
+ 0 Nonlinear |R| = [32m2.374458e-04[39m
+ 1 Nonlinear |R| = [32m1.711879e-18[39m
+
+[32mSystem prec3: Solve Converged![39m
+
+Pre-SMO residual: 0.000299513
+
+ 0 Nonlinear |R| = [32m2.995128e-04[39m
+ 1 Nonlinear |R| = [32m2.247282e-18[39m
+
+[32mSystem prec4: Solve Converged![39m
+
+Pre-SMO residual: 6.39916e-05
+
+ 0 Nonlinear |R| = [32m6.399157e-05[39m
+ 1 Nonlinear |R| = [32m4.514008e-19[39m
+
+[32mSystem prec5: Solve Converged![39m
+
+Pre-SMO residual: 5.64639e-06
+
+ 0 Nonlinear |R| = [32m5.646391e-06[39m
+ 1 Nonlinear |R| = [32m4.240431e-20[39m
+
+[32mSystem prec6: Solve Converged![39m
+
+
+Outlier Variable Residual Norms:
+  T_fluid: [31m3.475502e-02[39m
+
+Postprocessor Values:
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+| time           | dT             | flow_hx_bot    | flow_hx_top    | max_flow_T     | max_v          | min_flow_T     |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.729870e-06 |  -1.178743e-03 |   1.178743e-03 |   1.029220e+00 |   7.486756e-04 |  -1.029220e+00 |
+|   3.000000e-03 |  -2.908639e-05 |  -3.532709e-03 |   3.532709e-03 |   3.084585e+00 |   2.249414e-03 |  -3.084585e+00 |
+|   7.000000e-03 |  -6.738377e-05 |  -8.241347e-03 |   8.241347e-03 |   7.195932e+00 |   5.249190e-03 |  -7.195933e+00 |
+|   1.500000e-02 |  -1.423355e-04 |  -1.766442e-02 |   1.766442e-02 |   1.542369e+01 |   1.123962e-02 |  -1.542369e+01 |
+|   3.100000e-02 |  -2.858381e-04 |  -3.653318e-02 |   3.653318e-02 |   3.189895e+01 |   2.315632e-02 |  -3.189896e+01 |
+|   6.300000e-02 |  -5.485262e-04 |  -7.435099e-02 |   7.435099e-02 |   6.491959e+01 |   4.656554e-02 |  -6.491963e+01 |
+|   1.270000e-01 |  -9.854256e-04 |  -1.502804e-01 |   1.502804e-01 |   1.312174e+02 |   9.148929e-02 |  -1.312176e+02 |
+|   2.550000e-01 |  -1.555749e-03 |  -3.031927e-01 |   3.031927e-01 |   2.647331e+02 |   1.794379e-01 |  -2.647336e+02 |
+|   5.110000e-01 |  -1.741622e-03 |  -6.118046e-01 |   6.118046e-01 |   5.341988e+02 |   3.527705e-01 |  -5.341999e+02 |
+|   1.023000e+00 |   2.658462e-03 |  -1.226309e+00 |   1.226309e+00 |   1.070762e+03 |   6.709617e-01 |  -1.070758e+03 |
+|   2.047000e+00 |   5.039855e+00 |  -2.301297e+00 |   2.301297e+00 |   2.021149e+03 |   1.168218e+00 |  -2.009551e+03 |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
++----------------+----------------------+----------------+
+| time           | total_fission_source | total_power    |
++----------------+----------------------+----------------+
+|   0.000000e+00 |         0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   3.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   7.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   1.500000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   3.100000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   6.300000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   1.270000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   2.550000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   5.110000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   1.023000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   2.047000e+00 |         6.224151e+01 |   3.051908e+09 |
++----------------+----------------------+----------------+
+
+
+Scalar Variable Values:
++----------------+----------------+
+| time           | lambda         |
++----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.724615e-17 |
+|   3.000000e-03 |  -2.798410e-16 |
+|   7.000000e-03 |   4.172850e-16 |
+|   1.500000e-02 |   3.160875e-15 |
+|   3.100000e-02 |   7.538617e-15 |
+|   6.300000e-02 |   1.509634e-14 |
+|   1.270000e-01 |   4.748190e-14 |
+|   2.550000e-01 |   1.395570e-09 |
+|   5.110000e-01 |   1.955969e-10 |
+|   1.023000e+00 |  -6.505633e-14 |
+|   2.047000e+00 |   9.948671e-13 |
++----------------+----------------+
+
+
+
+
+Time Step 12, time = 4.095, dt = 2.048
+
+Pre-SMO residual: 6.59682e+09
+
+ 0 Nonlinear |R| = [32m6.596820e+09[39m
+ 1 Nonlinear |R| = [31m1.638974e+10[39m
+ 2 Nonlinear |R| = [31m2.769825e+10[39m
+ 3 Nonlinear |R| = [32m5.907371e+09[39m
+ 4 Nonlinear |R| = [32m3.539783e+09[39m
+ 5 Nonlinear |R| = [31m5.200343e+09[39m
+ 6 Nonlinear |R| = [32m3.922826e+09[39m
+ 7 Nonlinear |R| = [32m6.045199e+08[39m
+ 8 Nonlinear |R| = [31m7.434628e+08[39m
+ 9 Nonlinear |R| = [32m3.102315e+07[39m
+10 Nonlinear |R| = [32m4.280786e+06[39m
+11 Nonlinear |R| = [32m1.822146e+04[39m
+12 Nonlinear |R| = [32m5.333077e-01[39m
+
+[32mSystem nl0: Solve Converged![39m
+
+  Finished Solving                                                                       [[33m 62.82 s[39m] [[33m  390 MB[39m]
+
+Pre-SMO residual: 0.000145183
+
+ 0 Nonlinear |R| = [32m1.451827e-04[39m
+ 1 Nonlinear |R| = [32m1.645769e-18[39m
+
+[32mSystem prec1: Solve Converged![39m
+
+Pre-SMO residual: 0.000746575
+
+ 0 Nonlinear |R| = [32m7.465745e-04[39m
+ 1 Nonlinear |R| = [32m9.039340e-18[39m
+
+[32mSystem prec2: Solve Converged![39m
+
+Pre-SMO residual: 0.000237461
+
+ 0 Nonlinear |R| = [32m2.374611e-04[39m
+ 1 Nonlinear |R| = [32m3.050921e-18[39m
+
+[32mSystem prec3: Solve Converged![39m
+
+Pre-SMO residual: 0.000298015
+
+ 0 Nonlinear |R| = [32m2.980150e-04[39m
+ 1 Nonlinear |R| = [32m3.664337e-18[39m
+
+[32mSystem prec4: Solve Converged![39m
+
+Pre-SMO residual: 6.37828e-05
+
+ 0 Nonlinear |R| = [32m6.378281e-05[39m
+ 1 Nonlinear |R| = [32m7.160282e-19[39m
+
+[32mSystem prec5: Solve Converged![39m
+
+Pre-SMO residual: 6.00893e-06
+
+ 0 Nonlinear |R| = [32m6.008933e-06[39m
+ 1 Nonlinear |R| = [32m6.433993e-20[39m
+
+[32mSystem prec6: Solve Converged![39m
+
+
+Outlier Variable Residual Norms:
+  T_fluid: [31m5.333077e-01[39m
+
+Postprocessor Values:
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+| time           | dT             | flow_hx_bot    | flow_hx_top    | max_flow_T     | max_v          | min_flow_T     |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.729870e-06 |  -1.178743e-03 |   1.178743e-03 |   1.029220e+00 |   7.486756e-04 |  -1.029220e+00 |
+|   3.000000e-03 |  -2.908639e-05 |  -3.532709e-03 |   3.532709e-03 |   3.084585e+00 |   2.249414e-03 |  -3.084585e+00 |
+|   7.000000e-03 |  -6.738377e-05 |  -8.241347e-03 |   8.241347e-03 |   7.195932e+00 |   5.249190e-03 |  -7.195933e+00 |
+|   1.500000e-02 |  -1.423355e-04 |  -1.766442e-02 |   1.766442e-02 |   1.542369e+01 |   1.123962e-02 |  -1.542369e+01 |
+|   3.100000e-02 |  -2.858381e-04 |  -3.653318e-02 |   3.653318e-02 |   3.189895e+01 |   2.315632e-02 |  -3.189896e+01 |
+|   6.300000e-02 |  -5.485262e-04 |  -7.435099e-02 |   7.435099e-02 |   6.491959e+01 |   4.656554e-02 |  -6.491963e+01 |
+|   1.270000e-01 |  -9.854256e-04 |  -1.502804e-01 |   1.502804e-01 |   1.312174e+02 |   9.148929e-02 |  -1.312176e+02 |
+|   2.550000e-01 |  -1.555749e-03 |  -3.031927e-01 |   3.031927e-01 |   2.647331e+02 |   1.794379e-01 |  -2.647336e+02 |
+|   5.110000e-01 |  -1.741622e-03 |  -6.118046e-01 |   6.118046e-01 |   5.341988e+02 |   3.527705e-01 |  -5.341999e+02 |
+|   1.023000e+00 |   2.658462e-03 |  -1.226309e+00 |   1.226309e+00 |   1.070762e+03 |   6.709617e-01 |  -1.070758e+03 |
+|   2.047000e+00 |   5.039855e+00 |  -2.301297e+00 |   2.301297e+00 |   2.021149e+03 |   1.168218e+00 |  -2.009551e+03 |
+|   4.095000e+00 |   5.798755e+01 |  -3.483610e+00 |   3.483610e+00 |   3.264799e+03 |   1.640693e+00 |  -3.062793e+03 |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
++----------------+----------------------+----------------+
+| time           | total_fission_source | total_power    |
++----------------+----------------------+----------------+
+|   0.000000e+00 |         0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   3.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   7.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   1.500000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   3.100000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   6.300000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   1.270000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   2.550000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   5.110000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   1.023000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   2.047000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   4.095000e+00 |         6.224151e+01 |   3.051908e+09 |
++----------------+----------------------+----------------+
+
+
+Scalar Variable Values:
++----------------+----------------+
+| time           | lambda         |
++----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.724615e-17 |
+|   3.000000e-03 |  -2.798410e-16 |
+|   7.000000e-03 |   4.172850e-16 |
+|   1.500000e-02 |   3.160875e-15 |
+|   3.100000e-02 |   7.538617e-15 |
+|   6.300000e-02 |   1.509634e-14 |
+|   1.270000e-01 |   4.748190e-14 |
+|   2.550000e-01 |   1.395570e-09 |
+|   5.110000e-01 |   1.955969e-10 |
+|   1.023000e+00 |  -6.505633e-14 |
+|   2.047000e+00 |   9.948671e-13 |
+|   4.095000e+00 |   1.508573e-12 |
++----------------+----------------+
+
+
+
+
+Time Step 13, time = 8.191, dt = 4.096
+
+Pre-SMO residual: 4.4798e+09
+
+ 0 Nonlinear |R| = [32m4.479798e+09[39m
+ 1 Nonlinear |R| = [31m4.004318e+10[39m
+ 2 Nonlinear |R| = [32m3.215748e+10[39m
+ 3 Nonlinear |R| = [32m6.431093e+09[39m
+ 4 Nonlinear |R| = [32m5.037949e+09[39m
+ 5 Nonlinear |R| = [32m1.809681e+09[39m
+ 6 Nonlinear |R| = [32m4.307317e+08[39m
+ 7 Nonlinear |R| = [32m4.058777e+07[39m
+ 8 Nonlinear |R| = [32m1.034304e+06[39m
+ 9 Nonlinear |R| = [32m1.471332e+03[39m
+10 Nonlinear |R| = [32m2.891612e-02[39m
+
+  Finished Solving                                                                       [[33m 39.96 s[39m] [[33m  369 MB[39m]
+
+[32mSystem nl0: Solve Converged![39m
+
+Pre-SMO residual: 7.01586e-05
+
+ 0 Nonlinear |R| = [32m7.015862e-05[39m
+ 1 Nonlinear |R| = [32m1.771000e-18[39m
+
+[32mSystem prec1: Solve Converged![39m
+
+Pre-SMO residual: 0.000367959
+
+ 0 Nonlinear |R| = [32m3.679594e-04[39m
+ 1 Nonlinear |R| = [32m9.644611e-18[39m
+
+[32mSystem prec2: Solve Converged![39m
+
+Pre-SMO residual: 0.000120667
+
+ 0 Nonlinear |R| = [32m1.206667e-04[39m
+ 1 Nonlinear |R| = [32m3.420912e-18[39m
+
+[32mSystem prec3: Solve Converged![39m
+
+Pre-SMO residual: 0.000146447
+
+ 0 Nonlinear |R| = [32m1.464467e-04[39m
+ 1 Nonlinear |R| = [32m3.737163e-18[39m
+
+[32mSystem prec4: Solve Converged![39m
+
+Pre-SMO residual: 3.08858e-05
+
+ 0 Nonlinear |R| = [32m3.088576e-05[39m
+ 1 Nonlinear |R| = [32m7.469202e-19[39m
+
+[32mSystem prec5: Solve Converged![39m
+
+Pre-SMO residual: 3.49195e-06
+
+ 0 Nonlinear |R| = [32m3.491950e-06[39m
+ 1 Nonlinear |R| = [32m7.488782e-20[39m
+
+[32mSystem prec6: Solve Converged![39m
+
+
+Outlier Variable Residual Norms:
+  T_fluid: [31m2.891612e-02[39m
+
+Postprocessor Values:
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+| time           | dT             | flow_hx_bot    | flow_hx_top    | max_flow_T     | max_v          | min_flow_T     |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.729870e-06 |  -1.178743e-03 |   1.178743e-03 |   1.029220e+00 |   7.486756e-04 |  -1.029220e+00 |
+|   3.000000e-03 |  -2.908639e-05 |  -3.532709e-03 |   3.532709e-03 |   3.084585e+00 |   2.249414e-03 |  -3.084585e+00 |
+|   7.000000e-03 |  -6.738377e-05 |  -8.241347e-03 |   8.241347e-03 |   7.195932e+00 |   5.249190e-03 |  -7.195933e+00 |
+|   1.500000e-02 |  -1.423355e-04 |  -1.766442e-02 |   1.766442e-02 |   1.542369e+01 |   1.123962e-02 |  -1.542369e+01 |
+|   3.100000e-02 |  -2.858381e-04 |  -3.653318e-02 |   3.653318e-02 |   3.189895e+01 |   2.315632e-02 |  -3.189896e+01 |
+|   6.300000e-02 |  -5.485262e-04 |  -7.435099e-02 |   7.435099e-02 |   6.491959e+01 |   4.656554e-02 |  -6.491963e+01 |
+|   1.270000e-01 |  -9.854256e-04 |  -1.502804e-01 |   1.502804e-01 |   1.312174e+02 |   9.148929e-02 |  -1.312176e+02 |
+|   2.550000e-01 |  -1.555749e-03 |  -3.031927e-01 |   3.031927e-01 |   2.647331e+02 |   1.794379e-01 |  -2.647336e+02 |
+|   5.110000e-01 |  -1.741622e-03 |  -6.118046e-01 |   6.118046e-01 |   5.341988e+02 |   3.527705e-01 |  -5.341999e+02 |
+|   1.023000e+00 |   2.658462e-03 |  -1.226309e+00 |   1.226309e+00 |   1.070762e+03 |   6.709617e-01 |  -1.070758e+03 |
+|   2.047000e+00 |   5.039855e+00 |  -2.301297e+00 |   2.301297e+00 |   2.021149e+03 |   1.168218e+00 |  -2.009551e+03 |
+|   4.095000e+00 |   5.798755e+01 |  -3.483610e+00 |   3.483610e+00 |   3.264799e+03 |   1.640693e+00 |  -3.062793e+03 |
+|   8.191000e+00 |   9.392828e+01 |  -4.189764e+00 |   4.189764e+00 |   4.142874e+03 |   1.913944e+00 |  -3.749337e+03 |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
++----------------+----------------------+----------------+
+| time           | total_fission_source | total_power    |
++----------------+----------------------+----------------+
+|   0.000000e+00 |         0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   3.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   7.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   1.500000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   3.100000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   6.300000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   1.270000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   2.550000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   5.110000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   1.023000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   2.047000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   4.095000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   8.191000e+00 |         6.224151e+01 |   3.051908e+09 |
++----------------+----------------------+----------------+
+
+
+Scalar Variable Values:
++----------------+----------------+
+| time           | lambda         |
++----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.724615e-17 |
+|   3.000000e-03 |  -2.798410e-16 |
+|   7.000000e-03 |   4.172850e-16 |
+|   1.500000e-02 |   3.160875e-15 |
+|   3.100000e-02 |   7.538617e-15 |
+|   6.300000e-02 |   1.509634e-14 |
+|   1.270000e-01 |   4.748190e-14 |
+|   2.550000e-01 |   1.395570e-09 |
+|   5.110000e-01 |   1.955969e-10 |
+|   1.023000e+00 |  -6.505633e-14 |
+|   2.047000e+00 |   9.948671e-13 |
+|   4.095000e+00 |   1.508573e-12 |
+|   8.191000e+00 |   3.394190e-13 |
++----------------+----------------+
+
+
+
+
+Time Step 14, time = 16.383, dt = 8.192
+
+Pre-SMO residual: 1.29144e+09
+
+ 0 Nonlinear |R| = [32m1.291442e+09[39m
+ 1 Nonlinear |R| = [31m3.799979e+09[39m
+ 2 Nonlinear |R| = [32m2.529464e+08[39m
+ 3 Nonlinear |R| = [32m2.993160e+07[39m
+ 4 Nonlinear |R| = [32m1.128627e+06[39m
+ 5 Nonlinear |R| = [32m8.919454e+03[39m
+ 6 Nonlinear |R| = [32m4.154018e-01[39m
+
+[32mSystem nl0: Solve Converged![39m
+
+  Finished Solving                                                                       [[33m 23.89 s[39m] [[33m  373 MB[39m]
+
+Pre-SMO residual: 1.73922e-05
+
+ 0 Nonlinear |R| = [32m1.739216e-05[39m
+ 1 Nonlinear |R| = [32m2.037222e-18[39m
+
+[32mSystem prec1: Solve Converged![39m
+
+Pre-SMO residual: 9.75438e-05
+
+ 0 Nonlinear |R| = [32m9.754378e-05[39m
+ 1 Nonlinear |R| = [32m1.175961e-17[39m
+
+[32mSystem prec2: Solve Converged![39m
+
+Pre-SMO residual: 3.41645e-05
+
+ 0 Nonlinear |R| = [32m3.416454e-05[39m
+ 1 Nonlinear |R| = [32m3.731578e-18[39m
+
+[32mSystem prec3: Solve Converged![39m
+
+Pre-SMO residual: 3.98423e-05
+
+ 0 Nonlinear |R| = [32m3.984234e-05[39m
+ 1 Nonlinear |R| = [32m3.650103e-18[39m
+
+[32mSystem prec4: Solve Converged![39m
+
+Pre-SMO residual: 8.65833e-06
+
+ 0 Nonlinear |R| = [32m8.658333e-06[39m
+ 1 Nonlinear |R| = [32m7.580999e-19[39m
+
+[32mSystem prec5: Solve Converged![39m
+
+Pre-SMO residual: 1.14736e-06
+
+ 0 Nonlinear |R| = [32m1.147357e-06[39m
+ 1 Nonlinear |R| = [32m8.273423e-20[39m
+
+[32mSystem prec6: Solve Converged![39m
+
+
+Outlier Variable Residual Norms:
+  T_fluid: [31m4.154018e-01[39m
+
+Postprocessor Values:
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+| time           | dT             | flow_hx_bot    | flow_hx_top    | max_flow_T     | max_v          | min_flow_T     |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.729870e-06 |  -1.178743e-03 |   1.178743e-03 |   1.029220e+00 |   7.486756e-04 |  -1.029220e+00 |
+|   3.000000e-03 |  -2.908639e-05 |  -3.532709e-03 |   3.532709e-03 |   3.084585e+00 |   2.249414e-03 |  -3.084585e+00 |
+|   7.000000e-03 |  -6.738377e-05 |  -8.241347e-03 |   8.241347e-03 |   7.195932e+00 |   5.249190e-03 |  -7.195933e+00 |
+|   1.500000e-02 |  -1.423355e-04 |  -1.766442e-02 |   1.766442e-02 |   1.542369e+01 |   1.123962e-02 |  -1.542369e+01 |
+|   3.100000e-02 |  -2.858381e-04 |  -3.653318e-02 |   3.653318e-02 |   3.189895e+01 |   2.315632e-02 |  -3.189896e+01 |
+|   6.300000e-02 |  -5.485262e-04 |  -7.435099e-02 |   7.435099e-02 |   6.491959e+01 |   4.656554e-02 |  -6.491963e+01 |
+|   1.270000e-01 |  -9.854256e-04 |  -1.502804e-01 |   1.502804e-01 |   1.312174e+02 |   9.148929e-02 |  -1.312176e+02 |
+|   2.550000e-01 |  -1.555749e-03 |  -3.031927e-01 |   3.031927e-01 |   2.647331e+02 |   1.794379e-01 |  -2.647336e+02 |
+|   5.110000e-01 |  -1.741622e-03 |  -6.118046e-01 |   6.118046e-01 |   5.341988e+02 |   3.527705e-01 |  -5.341999e+02 |
+|   1.023000e+00 |   2.658462e-03 |  -1.226309e+00 |   1.226309e+00 |   1.070762e+03 |   6.709617e-01 |  -1.070758e+03 |
+|   2.047000e+00 |   5.039855e+00 |  -2.301297e+00 |   2.301297e+00 |   2.021149e+03 |   1.168218e+00 |  -2.009551e+03 |
+|   4.095000e+00 |   5.798755e+01 |  -3.483610e+00 |   3.483610e+00 |   3.264799e+03 |   1.640693e+00 |  -3.062793e+03 |
+|   8.191000e+00 |   9.392828e+01 |  -4.189764e+00 |   4.189764e+00 |   4.142874e+03 |   1.913944e+00 |  -3.749337e+03 |
+|   1.638300e+01 |   9.718769e+01 |  -4.435587e+00 |   4.435587e+00 |   4.434274e+03 |   2.004292e+00 |  -4.003190e+03 |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
++----------------+----------------------+----------------+
+| time           | total_fission_source | total_power    |
++----------------+----------------------+----------------+
+|   0.000000e+00 |         0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   3.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   7.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   1.500000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   3.100000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   6.300000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   1.270000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   2.550000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   5.110000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   1.023000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   2.047000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   4.095000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   8.191000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   1.638300e+01 |         6.224151e+01 |   3.051908e+09 |
++----------------+----------------------+----------------+
+
+
+Scalar Variable Values:
++----------------+----------------+
+| time           | lambda         |
++----------------+----------------+
+|   0.000000e+00 |   0.000000e+00 |
+|   1.000000e-03 |  -9.724615e-17 |
+|   3.000000e-03 |  -2.798410e-16 |
+|   7.000000e-03 |   4.172850e-16 |
+|   1.500000e-02 |   3.160875e-15 |
+|   3.100000e-02 |   7.538617e-15 |
+|   6.300000e-02 |   1.509634e-14 |
+|   1.270000e-01 |   4.748190e-14 |
+|   2.550000e-01 |   1.395570e-09 |
+|   5.110000e-01 |   1.955969e-10 |
+|   1.023000e+00 |  -6.505633e-14 |
+|   2.047000e+00 |   9.948671e-13 |
+|   4.095000e+00 |   1.508573e-12 |
+|   8.191000e+00 |   3.394190e-13 |
+|   1.638300e+01 |   8.843340e-13 |
++----------------+----------------+
+
+
+Steady-State Relative Differential Norm: 0.0114506
+
+
+
+Time Step 15, time = 32.767, dt = 16.384
+
+Pre-SMO residual: 2.35591e+08
+
+ 0 Nonlinear |R| = [32m2.355913e+08[39m
+ 1 Nonlinear |R| = [33m2.268892e+08[39m
+ 2 Nonlinear |R| = [32m4.778850e+07[39m
+ 3 Nonlinear |R| = [32m2.313743e+07[39m
+ 4 Nonlinear |R| = [32m2.185292e+07[39m
+ 5 Nonlinear |R| = [31m1.464346e+08[39m
+ 6 Nonlinear |R| = [32m5.017308e+07[39m
+ 7 Nonlinear |R| = [31m5.857296e+07[39m
+ 8 Nonlinear |R| = [32m3.623533e+07[39m
+ 9 Nonlinear |R| = [31m1.328340e+08[39m
+10 Nonlinear |R| = [32m3.189332e+06[39m
+11 Nonlinear |R| = [32m1.326284e+06[39m
+12 Nonlinear |R| = [32m2.053726e+02[39m
+13 Nonlinear |R| = [32m5.976751e-03[39m
+
+[32mSystem nl0: Solve Converged![39m
+
+  Finished Solving                                                                       [[33m 48.39 s[39m] [[33m  377 MB[39m]
+
+Pre-SMO residual: 5.87091e-06
+
+ 0 Nonlinear |R| = [32m5.870908e-06[39m
+ 1 Nonlinear |R| = [32m2.868143e-18[39m
+
+[32mSystem prec1: Solve Converged![39m
+
+Pre-SMO residual: 3.42512e-05
+
+ 0 Nonlinear |R| = [32m3.425116e-05[39m
+ 1 Nonlinear |R| = [32m1.561644e-17[39m
+
+[32mSystem prec2: Solve Converged![39m
+
+Pre-SMO residual: 7.8917e-06
+
+ 0 Nonlinear |R| = [32m7.891704e-06[39m
+ 1 Nonlinear |R| = [32m4.143944e-18[39m
+
+[32mSystem prec3: Solve Converged![39m
+
+Pre-SMO residual: 5.50675e-06
+
+ 0 Nonlinear |R| = [32m5.506751e-06[39m
+ 1 Nonlinear |R| = [32m3.735006e-18[39m
+
+[32mSystem prec4: Solve Converged![39m
+
+Pre-SMO residual: 1.45309e-06
+
+ 0 Nonlinear |R| = [32m1.453090e-06[39m
+ 1 Nonlinear |R| = [32m7.565717e-19[39m
+
+[32mSystem prec5: Solve Converged![39m
+
+Pre-SMO residual: 2.27774e-07
+
+ 0 Nonlinear |R| = [32m2.277743e-07[39m
+ 1 Nonlinear |R| = [32m7.989562e-20[39m
+
+[32mSystem prec6: Solve Converged![39m
+
+
+Outlier Variable Residual Norms:
+  T_fluid: [31m5.976751e-03[39m
+
+Postprocessor Values:
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+| time           | dT             | flow_hx_bot    | flow_hx_top    | max_flow_T     | max_v          | min_flow_T     |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+:                :                :                :                :                :                :                :
+|   1.000000e-03 |  -9.729870e-06 |  -1.178743e-03 |   1.178743e-03 |   1.029220e+00 |   7.486756e-04 |  -1.029220e+00 |
+|   3.000000e-03 |  -2.908639e-05 |  -3.532709e-03 |   3.532709e-03 |   3.084585e+00 |   2.249414e-03 |  -3.084585e+00 |
+|   7.000000e-03 |  -6.738377e-05 |  -8.241347e-03 |   8.241347e-03 |   7.195932e+00 |   5.249190e-03 |  -7.195933e+00 |
+|   1.500000e-02 |  -1.423355e-04 |  -1.766442e-02 |   1.766442e-02 |   1.542369e+01 |   1.123962e-02 |  -1.542369e+01 |
+|   3.100000e-02 |  -2.858381e-04 |  -3.653318e-02 |   3.653318e-02 |   3.189895e+01 |   2.315632e-02 |  -3.189896e+01 |
+|   6.300000e-02 |  -5.485262e-04 |  -7.435099e-02 |   7.435099e-02 |   6.491959e+01 |   4.656554e-02 |  -6.491963e+01 |
+|   1.270000e-01 |  -9.854256e-04 |  -1.502804e-01 |   1.502804e-01 |   1.312174e+02 |   9.148929e-02 |  -1.312176e+02 |
+|   2.550000e-01 |  -1.555749e-03 |  -3.031927e-01 |   3.031927e-01 |   2.647331e+02 |   1.794379e-01 |  -2.647336e+02 |
+|   5.110000e-01 |  -1.741622e-03 |  -6.118046e-01 |   6.118046e-01 |   5.341988e+02 |   3.527705e-01 |  -5.341999e+02 |
+|   1.023000e+00 |   2.658462e-03 |  -1.226309e+00 |   1.226309e+00 |   1.070762e+03 |   6.709617e-01 |  -1.070758e+03 |
+|   2.047000e+00 |   5.039855e+00 |  -2.301297e+00 |   2.301297e+00 |   2.021149e+03 |   1.168218e+00 |  -2.009551e+03 |
+|   4.095000e+00 |   5.798755e+01 |  -3.483610e+00 |   3.483610e+00 |   3.264799e+03 |   1.640693e+00 |  -3.062793e+03 |
+|   8.191000e+00 |   9.392828e+01 |  -4.189764e+00 |   4.189764e+00 |   4.142874e+03 |   1.913944e+00 |  -3.749337e+03 |
+|   1.638300e+01 |   9.718769e+01 |  -4.435587e+00 |   4.435587e+00 |   4.434274e+03 |   2.004292e+00 |  -4.003190e+03 |
+|   3.276700e+01 |   9.873882e+01 |  -4.484237e+00 |   4.484237e+00 |   4.498495e+03 |   2.019720e+00 |  -4.055727e+03 |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
++----------------+----------------------+----------------+
+| time           | total_fission_source | total_power    |
++----------------+----------------------+----------------+
+:                :                      :                :
+|   1.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   3.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   7.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   1.500000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   3.100000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   6.300000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   1.270000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   2.550000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   5.110000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   1.023000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   2.047000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   4.095000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   8.191000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   1.638300e+01 |         6.224151e+01 |   3.051908e+09 |
+|   3.276700e+01 |         6.224151e+01 |   3.051908e+09 |
++----------------+----------------------+----------------+
+
+
+Scalar Variable Values:
++----------------+----------------+
+| time           | lambda         |
++----------------+----------------+
+:                :                :
+|   1.000000e-03 |  -9.724615e-17 |
+|   3.000000e-03 |  -2.798410e-16 |
+|   7.000000e-03 |   4.172850e-16 |
+|   1.500000e-02 |   3.160875e-15 |
+|   3.100000e-02 |   7.538617e-15 |
+|   6.300000e-02 |   1.509634e-14 |
+|   1.270000e-01 |   4.748190e-14 |
+|   2.550000e-01 |   1.395570e-09 |
+|   5.110000e-01 |   1.955969e-10 |
+|   1.023000e+00 |  -6.505633e-14 |
+|   2.047000e+00 |   9.948671e-13 |
+|   4.095000e+00 |   1.508573e-12 |
+|   8.191000e+00 |   3.394190e-13 |
+|   1.638300e+01 |   8.843340e-13 |
+|   3.276700e+01 |   2.414975e-12 |
++----------------+----------------+
+
+
+Steady-State Relative Differential Norm: 0.00127792
+
+
+
+Time Step 16, time = 65.535, dt = 32.768
+
+Pre-SMO residual: 6.69189e+07
+
+ 0 Nonlinear |R| = [32m6.691891e+07[39m
+ 1 Nonlinear |R| = [31m8.747129e+07[39m
+ 2 Nonlinear |R| = [32m2.596605e+07[39m
+ 3 Nonlinear |R| = [32m1.643247e+06[39m
+ 4 Nonlinear |R| = [32m4.830743e+03[39m
+ 5 Nonlinear |R| = [32m5.061242e-02[39m
+
+[32mSystem nl0: Solve Converged![39m
+
+  Finished Solving                                                                       [[33m 19.18 s[39m] [[33m  380 MB[39m]
+
+Pre-SMO residual: 4.61221e-06
+
+ 0 Nonlinear |R| = [32m4.612213e-06[39m
+ 1 Nonlinear |R| = [32m4.014349e-18[39m
+
+[32mSystem prec1: Solve Converged![39m
+
+Pre-SMO residual: 2.19637e-05
+
+ 0 Nonlinear |R| = [32m2.196372e-05[39m
+ 1 Nonlinear |R| = [32m1.915070e-17[39m
+
+[32mSystem prec2: Solve Converged![39m
+
+Pre-SMO residual: 2.41149e-06
+
+ 0 Nonlinear |R| = [32m2.411493e-06[39m
+ 1 Nonlinear |R| = [32m4.303325e-18[39m
+
+[32mSystem prec3: Solve Converged![39m
+
+Pre-SMO residual: 5.01503e-07
+
+ 0 Nonlinear |R| = [32m5.015025e-07[39m
+ 1 Nonlinear |R| = [32m3.783637e-18[39m
+
+[32mSystem prec4: Solve Converged![39m
+
+Pre-SMO residual: 1.50724e-07
+
+ 0 Nonlinear |R| = [32m1.507239e-07[39m
+ 1 Nonlinear |R| = [32m7.388337e-19[39m
+
+[32mSystem prec5: Solve Converged![39m
+
+Pre-SMO residual: 2.63686e-08
+
+ 0 Nonlinear |R| = [32m2.636858e-08[39m
+ 1 Nonlinear |R| = [32m8.154177e-20[39m
+
+[32mSystem prec6: Solve Converged![39m
+
+
+Outlier Variable Residual Norms:
+  T_fluid: [31m5.061242e-02[39m
+
+Postprocessor Values:
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+| time           | dT             | flow_hx_bot    | flow_hx_top    | max_flow_T     | max_v          | min_flow_T     |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+:                :                :                :                :                :                :                :
+|   3.000000e-03 |  -2.908639e-05 |  -3.532709e-03 |   3.532709e-03 |   3.084585e+00 |   2.249414e-03 |  -3.084585e+00 |
+|   7.000000e-03 |  -6.738377e-05 |  -8.241347e-03 |   8.241347e-03 |   7.195932e+00 |   5.249190e-03 |  -7.195933e+00 |
+|   1.500000e-02 |  -1.423355e-04 |  -1.766442e-02 |   1.766442e-02 |   1.542369e+01 |   1.123962e-02 |  -1.542369e+01 |
+|   3.100000e-02 |  -2.858381e-04 |  -3.653318e-02 |   3.653318e-02 |   3.189895e+01 |   2.315632e-02 |  -3.189896e+01 |
+|   6.300000e-02 |  -5.485262e-04 |  -7.435099e-02 |   7.435099e-02 |   6.491959e+01 |   4.656554e-02 |  -6.491963e+01 |
+|   1.270000e-01 |  -9.854256e-04 |  -1.502804e-01 |   1.502804e-01 |   1.312174e+02 |   9.148929e-02 |  -1.312176e+02 |
+|   2.550000e-01 |  -1.555749e-03 |  -3.031927e-01 |   3.031927e-01 |   2.647331e+02 |   1.794379e-01 |  -2.647336e+02 |
+|   5.110000e-01 |  -1.741622e-03 |  -6.118046e-01 |   6.118046e-01 |   5.341988e+02 |   3.527705e-01 |  -5.341999e+02 |
+|   1.023000e+00 |   2.658462e-03 |  -1.226309e+00 |   1.226309e+00 |   1.070762e+03 |   6.709617e-01 |  -1.070758e+03 |
+|   2.047000e+00 |   5.039855e+00 |  -2.301297e+00 |   2.301297e+00 |   2.021149e+03 |   1.168218e+00 |  -2.009551e+03 |
+|   4.095000e+00 |   5.798755e+01 |  -3.483610e+00 |   3.483610e+00 |   3.264799e+03 |   1.640693e+00 |  -3.062793e+03 |
+|   8.191000e+00 |   9.392828e+01 |  -4.189764e+00 |   4.189764e+00 |   4.142874e+03 |   1.913944e+00 |  -3.749337e+03 |
+|   1.638300e+01 |   9.718769e+01 |  -4.435587e+00 |   4.435587e+00 |   4.434274e+03 |   2.004292e+00 |  -4.003190e+03 |
+|   3.276700e+01 |   9.873882e+01 |  -4.484237e+00 |   4.484237e+00 |   4.498495e+03 |   2.019720e+00 |  -4.055727e+03 |
+|   6.553500e+01 |   9.933201e+01 |  -4.489207e+00 |   4.489207e+00 |   4.507705e+03 |   2.022809e+00 |  -4.061783e+03 |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
++----------------+----------------------+----------------+
+| time           | total_fission_source | total_power    |
++----------------+----------------------+----------------+
+:                :                      :                :
+|   3.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   7.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   1.500000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   3.100000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   6.300000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   1.270000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   2.550000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   5.110000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   1.023000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   2.047000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   4.095000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   8.191000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   1.638300e+01 |         6.224151e+01 |   3.051908e+09 |
+|   3.276700e+01 |         6.224151e+01 |   3.051908e+09 |
+|   6.553500e+01 |         6.224151e+01 |   3.051908e+09 |
++----------------+----------------------+----------------+
+
+
+Scalar Variable Values:
++----------------+----------------+
+| time           | lambda         |
++----------------+----------------+
+:                :                :
+|   3.000000e-03 |  -2.798410e-16 |
+|   7.000000e-03 |   4.172850e-16 |
+|   1.500000e-02 |   3.160875e-15 |
+|   3.100000e-02 |   7.538617e-15 |
+|   6.300000e-02 |   1.509634e-14 |
+|   1.270000e-01 |   4.748190e-14 |
+|   2.550000e-01 |   1.395570e-09 |
+|   5.110000e-01 |   1.955969e-10 |
+|   1.023000e+00 |  -6.505633e-14 |
+|   2.047000e+00 |   9.948671e-13 |
+|   4.095000e+00 |   1.508573e-12 |
+|   8.191000e+00 |   3.394190e-13 |
+|   1.638300e+01 |   8.843340e-13 |
+|   3.276700e+01 |   2.414975e-12 |
+|   6.553500e+01 |   1.639248e-12 |
++----------------+----------------+
+
+
+Steady-State Relative Differential Norm: 8.22959e-05
+
+
+
+Time Step 17, time = 131.071, dt = 65.536
+
+Pre-SMO residual: 2.86001e+07
+
+ 0 Nonlinear |R| = [32m2.860010e+07[39m
+ 1 Nonlinear |R| = [32m2.706753e+04[39m
+ 2 Nonlinear |R| = [32m1.558633e+00[39m
+ 3 Nonlinear |R| = [32m5.833497e-03[39m
+
+  Finished Solving                                                                       [[33m 12.33 s[39m] [[33m  382 MB[39m]
+
+[32mSystem nl0: Solve Converged![39m
+
+Pre-SMO residual: 3.21939e-06
+
+ 0 Nonlinear |R| = [32m3.219389e-06[39m
+ 1 Nonlinear |R| = [32m4.964933e-18[39m
+
+[32mSystem prec1: Solve Converged![39m
+
+Pre-SMO residual: 1.10145e-05
+
+ 0 Nonlinear |R| = [32m1.101454e-05[39m
+ 1 Nonlinear |R| = [32m2.125988e-17[39m
+
+[32mSystem prec2: Solve Converged![39m
+
+Pre-SMO residual: 5.08089e-07
+
+ 0 Nonlinear |R| = [32m5.080887e-07[39m
+ 1 Nonlinear |R| = [32m4.395912e-18[39m
+
+[32mSystem prec3: Solve Converged![39m
+
+Pre-SMO residual: 4.01857e-08
+
+ 0 Nonlinear |R| = [32m4.018568e-08[39m
+ 1 Nonlinear |R| = [32m3.811203e-18[39m
+
+[32mSystem prec4: Solve Converged![39m
+
+Pre-SMO residual: 9.40879e-09
+
+ 0 Nonlinear |R| = [32m9.408786e-09[39m
+
+[32mSystem prec5: Solve Converged![39m
+
+Pre-SMO residual: 1.60005e-09
+
+ 0 Nonlinear |R| = [32m1.600051e-09[39m
+
+[32mSystem prec6: Solve Converged![39m
+
+
+Outlier Variable Residual Norms:
+  T_fluid: [31m5.833497e-03[39m
+
+Postprocessor Values:
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+| time           | dT             | flow_hx_bot    | flow_hx_top    | max_flow_T     | max_v          | min_flow_T     |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+:                :                :                :                :                :                :                :
+|   7.000000e-03 |  -6.738377e-05 |  -8.241347e-03 |   8.241347e-03 |   7.195932e+00 |   5.249190e-03 |  -7.195933e+00 |
+|   1.500000e-02 |  -1.423355e-04 |  -1.766442e-02 |   1.766442e-02 |   1.542369e+01 |   1.123962e-02 |  -1.542369e+01 |
+|   3.100000e-02 |  -2.858381e-04 |  -3.653318e-02 |   3.653318e-02 |   3.189895e+01 |   2.315632e-02 |  -3.189896e+01 |
+|   6.300000e-02 |  -5.485262e-04 |  -7.435099e-02 |   7.435099e-02 |   6.491959e+01 |   4.656554e-02 |  -6.491963e+01 |
+|   1.270000e-01 |  -9.854256e-04 |  -1.502804e-01 |   1.502804e-01 |   1.312174e+02 |   9.148929e-02 |  -1.312176e+02 |
+|   2.550000e-01 |  -1.555749e-03 |  -3.031927e-01 |   3.031927e-01 |   2.647331e+02 |   1.794379e-01 |  -2.647336e+02 |
+|   5.110000e-01 |  -1.741622e-03 |  -6.118046e-01 |   6.118046e-01 |   5.341988e+02 |   3.527705e-01 |  -5.341999e+02 |
+|   1.023000e+00 |   2.658462e-03 |  -1.226309e+00 |   1.226309e+00 |   1.070762e+03 |   6.709617e-01 |  -1.070758e+03 |
+|   2.047000e+00 |   5.039855e+00 |  -2.301297e+00 |   2.301297e+00 |   2.021149e+03 |   1.168218e+00 |  -2.009551e+03 |
+|   4.095000e+00 |   5.798755e+01 |  -3.483610e+00 |   3.483610e+00 |   3.264799e+03 |   1.640693e+00 |  -3.062793e+03 |
+|   8.191000e+00 |   9.392828e+01 |  -4.189764e+00 |   4.189764e+00 |   4.142874e+03 |   1.913944e+00 |  -3.749337e+03 |
+|   1.638300e+01 |   9.718769e+01 |  -4.435587e+00 |   4.435587e+00 |   4.434274e+03 |   2.004292e+00 |  -4.003190e+03 |
+|   3.276700e+01 |   9.873882e+01 |  -4.484237e+00 |   4.484237e+00 |   4.498495e+03 |   2.019720e+00 |  -4.055727e+03 |
+|   6.553500e+01 |   9.933201e+01 |  -4.489207e+00 |   4.489207e+00 |   4.507705e+03 |   2.022809e+00 |  -4.061783e+03 |
+|   1.310710e+02 |   9.940788e+01 |  -4.489442e+00 |   4.489442e+00 |   4.508440e+03 |   2.023020e+00 |  -4.062154e+03 |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
++----------------+----------------------+----------------+
+| time           | total_fission_source | total_power    |
++----------------+----------------------+----------------+
+:                :                      :                :
+|   7.000000e-03 |         6.224151e+01 |   3.051908e+09 |
+|   1.500000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   3.100000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   6.300000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   1.270000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   2.550000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   5.110000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   1.023000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   2.047000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   4.095000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   8.191000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   1.638300e+01 |         6.224151e+01 |   3.051908e+09 |
+|   3.276700e+01 |         6.224151e+01 |   3.051908e+09 |
+|   6.553500e+01 |         6.224151e+01 |   3.051908e+09 |
+|   1.310710e+02 |         6.224151e+01 |   3.051908e+09 |
++----------------+----------------------+----------------+
+
+
+Scalar Variable Values:
++----------------+----------------+
+| time           | lambda         |
++----------------+----------------+
+:                :                :
+|   7.000000e-03 |   4.172850e-16 |
+|   1.500000e-02 |   3.160875e-15 |
+|   3.100000e-02 |   7.538617e-15 |
+|   6.300000e-02 |   1.509634e-14 |
+|   1.270000e-01 |   4.748190e-14 |
+|   2.550000e-01 |   1.395570e-09 |
+|   5.110000e-01 |   1.955969e-10 |
+|   1.023000e+00 |  -6.505633e-14 |
+|   2.047000e+00 |   9.948671e-13 |
+|   4.095000e+00 |   1.508573e-12 |
+|   8.191000e+00 |   3.394190e-13 |
+|   1.638300e+01 |   8.843340e-13 |
+|   3.276700e+01 |   2.414975e-12 |
+|   6.553500e+01 |   1.639248e-12 |
+|   1.310710e+02 |  -1.978615e-12 |
++----------------+----------------+
+
+
+Steady-State Relative Differential Norm: 3.02215e-06
+
+
+
+Time Step 18, time = 262.143, dt = 131.072
+
+Pre-SMO residual: 1.41941e+07
+
+ 0 Nonlinear |R| = [32m1.419407e+07[39m
+ 1 Nonlinear |R| = [32m2.724621e+03[39m
+ 2 Nonlinear |R| = [32m1.146397e-02[39m
+
+[32mSystem nl0: Solve Converged![39m
+
+  Finished Solving                                                                       [[33m  7.66 s[39m] [[33m  383 MB[39m]
+
+Pre-SMO residual: 1.71962e-06
+
+ 0 Nonlinear |R| = [32m1.719620e-06[39m
+ 1 Nonlinear |R| = [32m6.027871e-18[39m
+
+[32mSystem prec1: Solve Converged![39m
+
+Pre-SMO residual: 3.67058e-06
+
+ 0 Nonlinear |R| = [32m3.670583e-06[39m
+ 1 Nonlinear |R| = [32m2.243624e-17[39m
+
+[32mSystem prec2: Solve Converged![39m
+
+Pre-SMO residual: 5.95463e-08
+
+ 0 Nonlinear |R| = [32m5.954630e-08[39m
+ 1 Nonlinear |R| = [32m4.338689e-18[39m
+
+[32mSystem prec3: Solve Converged![39m
+
+Pre-SMO residual: 1.99026e-09
+
+ 0 Nonlinear |R| = [32m1.990258e-09[39m
+
+[32mSystem prec4: Solve Converged![39m
+
+Pre-SMO residual: 9.71209e-09
+
+ 0 Nonlinear |R| = [32m9.712086e-09[39m
+
+[32mSystem prec5: Solve Converged![39m
+
+Pre-SMO residual: 1.65134e-09
+
+ 0 Nonlinear |R| = [32m1.651343e-09[39m
+
+[32mSystem prec6: Solve Converged![39m
+
+
+Outlier Variable Residual Norms:
+  T_fluid: [31m1.146397e-02[39m
+
+Postprocessor Values:
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+| time           | dT             | flow_hx_bot    | flow_hx_top    | max_flow_T     | max_v          | min_flow_T     |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+:                :                :                :                :                :                :                :
+|   1.500000e-02 |  -1.423355e-04 |  -1.766442e-02 |   1.766442e-02 |   1.542369e+01 |   1.123962e-02 |  -1.542369e+01 |
+|   3.100000e-02 |  -2.858381e-04 |  -3.653318e-02 |   3.653318e-02 |   3.189895e+01 |   2.315632e-02 |  -3.189896e+01 |
+|   6.300000e-02 |  -5.485262e-04 |  -7.435099e-02 |   7.435099e-02 |   6.491959e+01 |   4.656554e-02 |  -6.491963e+01 |
+|   1.270000e-01 |  -9.854256e-04 |  -1.502804e-01 |   1.502804e-01 |   1.312174e+02 |   9.148929e-02 |  -1.312176e+02 |
+|   2.550000e-01 |  -1.555749e-03 |  -3.031927e-01 |   3.031927e-01 |   2.647331e+02 |   1.794379e-01 |  -2.647336e+02 |
+|   5.110000e-01 |  -1.741622e-03 |  -6.118046e-01 |   6.118046e-01 |   5.341988e+02 |   3.527705e-01 |  -5.341999e+02 |
+|   1.023000e+00 |   2.658462e-03 |  -1.226309e+00 |   1.226309e+00 |   1.070762e+03 |   6.709617e-01 |  -1.070758e+03 |
+|   2.047000e+00 |   5.039855e+00 |  -2.301297e+00 |   2.301297e+00 |   2.021149e+03 |   1.168218e+00 |  -2.009551e+03 |
+|   4.095000e+00 |   5.798755e+01 |  -3.483610e+00 |   3.483610e+00 |   3.264799e+03 |   1.640693e+00 |  -3.062793e+03 |
+|   8.191000e+00 |   9.392828e+01 |  -4.189764e+00 |   4.189764e+00 |   4.142874e+03 |   1.913944e+00 |  -3.749337e+03 |
+|   1.638300e+01 |   9.718769e+01 |  -4.435587e+00 |   4.435587e+00 |   4.434274e+03 |   2.004292e+00 |  -4.003190e+03 |
+|   3.276700e+01 |   9.873882e+01 |  -4.484237e+00 |   4.484237e+00 |   4.498495e+03 |   2.019720e+00 |  -4.055727e+03 |
+|   6.553500e+01 |   9.933201e+01 |  -4.489207e+00 |   4.489207e+00 |   4.507705e+03 |   2.022809e+00 |  -4.061783e+03 |
+|   1.310710e+02 |   9.940788e+01 |  -4.489442e+00 |   4.489442e+00 |   4.508440e+03 |   2.023020e+00 |  -4.062154e+03 |
+|   2.621430e+02 |   9.941218e+01 |  -4.489450e+00 |   4.489450e+00 |   4.508476e+03 |   2.023028e+00 |  -4.062170e+03 |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
++----------------+----------------------+----------------+
+| time           | total_fission_source | total_power    |
++----------------+----------------------+----------------+
+:                :                      :                :
+|   1.500000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   3.100000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   6.300000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   1.270000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   2.550000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   5.110000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   1.023000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   2.047000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   4.095000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   8.191000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   1.638300e+01 |         6.224151e+01 |   3.051908e+09 |
+|   3.276700e+01 |         6.224151e+01 |   3.051908e+09 |
+|   6.553500e+01 |         6.224151e+01 |   3.051908e+09 |
+|   1.310710e+02 |         6.224151e+01 |   3.051908e+09 |
+|   2.621430e+02 |         6.224151e+01 |   3.051908e+09 |
++----------------+----------------------+----------------+
+
+
+Scalar Variable Values:
++----------------+----------------+
+| time           | lambda         |
++----------------+----------------+
+:                :                :
+|   1.500000e-02 |   3.160875e-15 |
+|   3.100000e-02 |   7.538617e-15 |
+|   6.300000e-02 |   1.509634e-14 |
+|   1.270000e-01 |   4.748190e-14 |
+|   2.550000e-01 |   1.395570e-09 |
+|   5.110000e-01 |   1.955969e-10 |
+|   1.023000e+00 |  -6.505633e-14 |
+|   2.047000e+00 |   9.948671e-13 |
+|   4.095000e+00 |   1.508573e-12 |
+|   8.191000e+00 |   3.394190e-13 |
+|   1.638300e+01 |   8.843340e-13 |
+|   3.276700e+01 |   2.414975e-12 |
+|   6.553500e+01 |   1.639248e-12 |
+|   1.310710e+02 |  -1.978615e-12 |
+|   2.621430e+02 |  -5.979936e-13 |
++----------------+----------------+
+
+
+Steady-State Relative Differential Norm: 6.67821e-08
+
+
+
+Time Step 19, time = 524.287, dt = 262.144
+
+Pre-SMO residual: 7.10512e+06
+
+ 0 Nonlinear |R| = [32m7.105119e+06[39m
+ 1 Nonlinear |R| = [32m6.759537e+02[39m
+ 2 Nonlinear |R| = [32m6.180009e-03[39m
+
+  Finished Solving                                                                       [[33m  9.04 s[39m] [[33m  383 MB[39m]
+
+[32mSystem nl0: Solve Converged![39m
+
+Pre-SMO residual: 6.26529e-07
+
+ 0 Nonlinear |R| = [32m6.265293e-07[39m
+ 1 Nonlinear |R| = [32m6.513956e-18[39m
+
+[32mSystem prec1: Solve Converged![39m
+
+Pre-SMO residual: 7.3362e-07
+
+ 0 Nonlinear |R| = [32m7.336203e-07[39m
+ 1 Nonlinear |R| = [32m2.392320e-17[39m
+
+[32mSystem prec2: Solve Converged![39m
+
+Pre-SMO residual: 3.70177e-09
+
+ 0 Nonlinear |R| = [32m3.701773e-09[39m
+
+[32mSystem prec3: Solve Converged![39m
+
+Pre-SMO residual: 2.15409e-09
+
+ 0 Nonlinear |R| = [32m2.154087e-09[39m
+
+[32mSystem prec4: Solve Converged![39m
+
+Pre-SMO residual: 9.74721e-09
+
+ 0 Nonlinear |R| = [32m9.747212e-09[39m
+
+[32mSystem prec5: Solve Converged![39m
+
+Pre-SMO residual: 1.65842e-09
+
+ 0 Nonlinear |R| = [32m1.658415e-09[39m
+
+[32mSystem prec6: Solve Converged![39m
+
+
+Outlier Variable Residual Norms:
+  T_fluid: [31m6.180009e-03[39m
+
+Postprocessor Values:
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+| time           | dT             | flow_hx_bot    | flow_hx_top    | max_flow_T     | max_v          | min_flow_T     |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+:                :                :                :                :                :                :                :
+|   3.100000e-02 |  -2.858381e-04 |  -3.653318e-02 |   3.653318e-02 |   3.189895e+01 |   2.315632e-02 |  -3.189896e+01 |
+|   6.300000e-02 |  -5.485262e-04 |  -7.435099e-02 |   7.435099e-02 |   6.491959e+01 |   4.656554e-02 |  -6.491963e+01 |
+|   1.270000e-01 |  -9.854256e-04 |  -1.502804e-01 |   1.502804e-01 |   1.312174e+02 |   9.148929e-02 |  -1.312176e+02 |
+|   2.550000e-01 |  -1.555749e-03 |  -3.031927e-01 |   3.031927e-01 |   2.647331e+02 |   1.794379e-01 |  -2.647336e+02 |
+|   5.110000e-01 |  -1.741622e-03 |  -6.118046e-01 |   6.118046e-01 |   5.341988e+02 |   3.527705e-01 |  -5.341999e+02 |
+|   1.023000e+00 |   2.658462e-03 |  -1.226309e+00 |   1.226309e+00 |   1.070762e+03 |   6.709617e-01 |  -1.070758e+03 |
+|   2.047000e+00 |   5.039855e+00 |  -2.301297e+00 |   2.301297e+00 |   2.021149e+03 |   1.168218e+00 |  -2.009551e+03 |
+|   4.095000e+00 |   5.798755e+01 |  -3.483610e+00 |   3.483610e+00 |   3.264799e+03 |   1.640693e+00 |  -3.062793e+03 |
+|   8.191000e+00 |   9.392828e+01 |  -4.189764e+00 |   4.189764e+00 |   4.142874e+03 |   1.913944e+00 |  -3.749337e+03 |
+|   1.638300e+01 |   9.718769e+01 |  -4.435587e+00 |   4.435587e+00 |   4.434274e+03 |   2.004292e+00 |  -4.003190e+03 |
+|   3.276700e+01 |   9.873882e+01 |  -4.484237e+00 |   4.484237e+00 |   4.498495e+03 |   2.019720e+00 |  -4.055727e+03 |
+|   6.553500e+01 |   9.933201e+01 |  -4.489207e+00 |   4.489207e+00 |   4.507705e+03 |   2.022809e+00 |  -4.061783e+03 |
+|   1.310710e+02 |   9.940788e+01 |  -4.489442e+00 |   4.489442e+00 |   4.508440e+03 |   2.023020e+00 |  -4.062154e+03 |
+|   2.621430e+02 |   9.941218e+01 |  -4.489450e+00 |   4.489450e+00 |   4.508476e+03 |   2.023028e+00 |  -4.062170e+03 |
+|   5.242870e+02 |   9.941224e+01 |  -4.489453e+00 |   4.489453e+00 |   4.508479e+03 |   2.023030e+00 |  -4.062173e+03 |
++----------------+----------------+----------------+----------------+----------------+----------------+----------------+
++----------------+----------------------+----------------+
+| time           | total_fission_source | total_power    |
++----------------+----------------------+----------------+
+:                :                      :                :
+|   3.100000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   6.300000e-02 |         6.224151e+01 |   3.051908e+09 |
+|   1.270000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   2.550000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   5.110000e-01 |         6.224151e+01 |   3.051908e+09 |
+|   1.023000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   2.047000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   4.095000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   8.191000e+00 |         6.224151e+01 |   3.051908e+09 |
+|   1.638300e+01 |         6.224151e+01 |   3.051908e+09 |
+|   3.276700e+01 |         6.224151e+01 |   3.051908e+09 |
+|   6.553500e+01 |         6.224151e+01 |   3.051908e+09 |
+|   1.310710e+02 |         6.224151e+01 |   3.051908e+09 |
+|   2.621430e+02 |         6.224151e+01 |   3.051908e+09 |
+|   5.242870e+02 |         6.224151e+01 |   3.051908e+09 |
++----------------+----------------------+----------------+
+
+
+Scalar Variable Values:
++----------------+----------------+
+| time           | lambda         |
++----------------+----------------+
+:                :                :
+|   3.100000e-02 |   7.538617e-15 |
+|   6.300000e-02 |   1.509634e-14 |
+|   1.270000e-01 |   4.748190e-14 |
+|   2.550000e-01 |   1.395570e-09 |
+|   5.110000e-01 |   1.955969e-10 |
+|   1.023000e+00 |  -6.505633e-14 |
+|   2.047000e+00 |   9.948671e-13 |
+|   4.095000e+00 |   1.508573e-12 |
+|   8.191000e+00 |   3.394190e-13 |
+|   1.638300e+01 |   8.843340e-13 |
+|   3.276700e+01 |   2.414975e-12 |
+|   6.553500e+01 |   1.639248e-12 |
+|   1.310710e+02 |  -1.978615e-12 |
+|   2.621430e+02 |  -5.979936e-13 |
+|   5.242870e+02 |  -1.580902e-13 |
++----------------+----------------+
+
+
+Steady-State Solution Achieved at time: 524.287
+
+Finished Executing                                                                       [[33m456.38 s[39m] [[33m  383 MB[39m]
+
