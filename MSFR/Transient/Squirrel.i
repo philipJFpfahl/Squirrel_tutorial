@@ -1,3 +1,5 @@
+rho_external = ${fparse 1.180563e-03 }
+LAMBDA = 8.57e-7
 beta =0.0030207957
 lambda1 = 0.0133104
 lambda2 = 0.0305427
@@ -5,7 +7,6 @@ lambda3 = 0.115179
 lambda4 = 0.301152
 lambda5 = 0.879376
 lambda6 = 2.91303
-
 [Problem]
   allow_initial_conditions_with_restart = true
 []
@@ -27,14 +28,31 @@ lambda6 = 2.91303
     type = ODETimeDerivative
     variable = power_scalar
   []
+  [expression]
+    type = ParsedODEKernel
+    expression = '-(rho_external + rho_T + rho_insertion-beta)/LAMBDA*power_scalar-S/LAMBDA'
+    constant_expressions = '${fparse rho_external} ${fparse beta} ${fparse LAMBDA}'
+    constant_names = 'rho_external beta LAMBDA'
+    variable = power_scalar
+    postprocessors = 'S rho_insertion rho_T'
+  []
 []
+
 
 [AuxVariables]
   [power_density]
     type = MooseVariableFVReal
     initial_from_file_var = 'power_density'
   []
+  [power_density_scaled]
+    type = MooseVariableFVReal
+    initial_from_file_var = 'power_density'
+  []
   [fission_source]
+    type = MooseVariableFVReal
+    initial_from_file_var = 'fission_source'
+  []
+  [fission_source_scaled]
     type = MooseVariableFVReal
     initial_from_file_var = 'fission_source'
   []
@@ -76,6 +94,20 @@ lambda6 = 2.91303
   []
 []
 
+[AuxKernels]
+    [power_scaling]
+        type = ScalarMultiplication
+        variable = power_density_scaled
+        source_variable = power_density 
+        factor = power_scalar
+    []
+    [fs_scaling]
+        type = ScalarMultiplication
+        variable = fission_source_scaled
+        source_variable = fission_source 
+        factor = power_scalar
+    []
+[]
 
 [Functions]
   [insertion_func]
@@ -87,7 +119,7 @@ lambda6 = 2.91303
 [Executioner]
   type = Transient
   dt = 1e9
-  end_time = 10
+  end_time = 1e9
   solve_type = 'PJFNK'
   petsc_options_iname = '-pc_type -pc_factor_shift_type'
   petsc_options_value = 'lu NONZERO'
@@ -103,7 +135,22 @@ lambda6 = 2.91303
 
 
 [Postprocessors]
- [Calc_rho]
+ [rho_T]
+   type = TemperatureFeedbackInt
+   variable = T
+   flux = flux
+   T_ref = T_ref
+   total_rho = ${fparse -10e-5}
+   Norm = flux_int
+   block = 1
+ []
+ [flux_int]
+   type = ElementIntegralVariablePostprocessor
+   execute_on = 'INITIAL TIMESTEP_END'
+   variable = flux
+   block = 1
+ []
+ [Rho_Flow]
   type = ParsedPostprocessor
   function = 'beta-S'
   pp_names = 'S'
@@ -171,4 +218,8 @@ lambda6 = 2.91303
   lambda = ${lambda6}
   execute_on = 'initial timestep_end'
  [] 
+ [rho_insertion]
+   type = FunctionValuePostprocessor
+   function = insertion_func
+ []
 []
