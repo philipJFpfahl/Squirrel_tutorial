@@ -254,13 +254,13 @@ scalar_systems = 'prec1 prec2 prec3 prec4 prec5 prec6'
   []
 []
 
-#[Functions]
-#  # Guess to have a 3D power distribution
-#  [cosine_guess]
-#    type = ParsedFunction
-#    expression = 'max(0, cos(x*pi/2/1.2))*max(0, cos(y*pi/2/1.1))'
-#  []
-#[]
+[Functions]
+  # Guess to have a 3D power distribution
+  [cosine_guess]
+    type = ParsedFunction
+    expression = 'max(0, cos(x*pi/2/1.2))*max(0, cos(y*pi/2/1.1))'
+  []
+[]
 
 [FVKernels]
   [pump]
