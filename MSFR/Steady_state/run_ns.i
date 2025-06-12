@@ -430,7 +430,6 @@ petsc_options_value_prec = 'lu NONZERO'
 [MultiApps]
     [Squirrel]
       type = TransientMultiApp
-      #input_files = "Squirrel_SS.i"
       input_files = "Squirrel.i"
       execute_on= "timestep_end "
       sub_cycling = false
