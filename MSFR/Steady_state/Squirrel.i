@@ -31,11 +31,11 @@ lambda6 = 2.91303
   []
   [expression]
     type = ParsedODEKernel
-    expression = '-(rho_external+rho_temp+rho_insertion-beta)/LAMBDA*power_scalar-A/LAMBDA'
+    expression = '-(rho_external+rho_T+rho_insertion-beta)/LAMBDA*power_scalar-A/LAMBDA'
     constant_expressions = '${fparse rho_external} ${fparse beta} ${fparse LAMBDA}'
     constant_names = 'rho_external beta LAMBDA'
     variable = power_scalar
-    postprocessors = 'rho_temp A rho_insertion '
+    postprocessors = 'rho_T A rho_insertion '
   []
 []
 
