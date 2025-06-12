@@ -218,11 +218,6 @@ vel = 1
     [push_T]
     [] 
     [pull_flux]
-        type = MultiAppGeneralFieldShapeEvaluationTransfer
-        from_multi_app = Squirrel 
-        source_variable = flux_scaled 
-        variable = flux
-        execute_on= "timestep_end initial"
     [] 
 []
 
