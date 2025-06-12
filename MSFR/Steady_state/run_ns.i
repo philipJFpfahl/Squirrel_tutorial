@@ -480,5 +480,26 @@ petsc_options_value_prec = 'lu NONZERO'
         variable = c6
         execute_on= "timestep_end initial"
     [] 
+    [push_T]
+        type = MultiAppGeneralFieldShapeEvaluationTransfer
+        to_multi_app = Squirrel 
+        source_variable = T 
+        variable = T
+        execute_on= "timestep_end initial"
+    [] 
+    [pull_power]
+        type = MultiAppGeneralFieldShapeEvaluationTransfer
+        from_multi_app = Squirrel 
+        source_variable = power_density_scaled 
+        variable = power_density
+        execute_on= "timestep_end initial"
+    [] 
+    [pull_fs]
+        type = MultiAppGeneralFieldShapeEvaluationTransfer
+        from_multi_app = Squirrel 
+        source_variable = fission_source_scaled 
+        variable = fission_source
+        execute_on= "timestep_end initial"
+    [] 
 []
 

@@ -1,30 +1,38 @@
+################################################################################
 # Material properties
+################################################################################
 rho = 4284  # density [kg / m^3]  (@1000K)
 cp = 1594  # specific heat capacity [J / kg / K]
 drho_dT = 0.882  # derivative of density w.r.t. temperature [kg / m^3 / K]
 mu = 0.0166 # viscosity [Pa s]
 k = 1.7 # thermal conductivity [W / m / K]
-# https://www.researchgate.net/publication/337161399_Development_of_a_control-\
-# oriented_power_plant_simulator_for_the_molten_salt_fast_reactor/fulltext/5dc9\
-# 5c9da6fdcc57503eec39/Development-of-a-control-oriented-power-plant-simulator-\
-# for-the-molten-salt-fast-reactor.pdf
 von_karman_const = 0.41
 
+################################################################################
 # Turbulent properties
+################################################################################
 Pr_t = 0.9 # turbulent Prandtl number
 Sc_t = 1 # turbulent Schmidt number
 
+################################################################################
 # Derived material properties
+################################################################################
 alpha = ${fparse drho_dT / rho}  # thermal expansion coefficient
 
+################################################################################
 # Operating parameters
+################################################################################
 T_HX = 873.15 # heat exchanger temperature [K]
 
+################################################################################
 # Mass flow rate tuning, for heat exchanger pressure and temperature drop
+################################################################################
 friction = 4000.# [kg / m^4]
 pump_force = -20000. # [N / m^3]
 
-
+################################################################################
+# Kinetics parameters
+################################################################################
 lambda1_m = -0.0133104
 lambda2_m = -0.0305427
 lambda3_m = -0.115179
@@ -246,13 +254,13 @@ scalar_systems = 'prec1 prec2 prec3 prec4 prec5 prec6'
   []
 []
 
-[Functions]
-  # Guess to have a 3D power distribution
-  [cosine_guess]
-    type = ParsedFunction
-    expression = 'max(0, cos(x*pi/2/1.2))*max(0, cos(y*pi/2/1.1))'
-  []
-[]
+#[Functions]
+#  # Guess to have a 3D power distribution
+#  [cosine_guess]
+#    type = ParsedFunction
+#    expression = 'max(0, cos(x*pi/2/1.2))*max(0, cos(y*pi/2/1.1))'
+#  []
+#[]
 
 [FVKernels]
   [pump]
@@ -292,14 +300,6 @@ scalar_systems = 'prec1 prec2 prec3 prec4 prec5 prec6'
 ################################################################################
 # EXECUTION / SOLVE
 ################################################################################
-
-#[Functions]
-#  [dts]
-#    type = PiecewiseConstant
-#    x = '0 10  100'
-#    y = '2 4 5'
-#  []
-#[]
 
 [Executioner]
   type = Transient

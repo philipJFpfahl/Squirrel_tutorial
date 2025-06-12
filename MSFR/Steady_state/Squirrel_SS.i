@@ -9,6 +9,7 @@ lambda6 = 2.91303
 [Problem]
   allow_initial_conditions_with_restart = true
 []
+
 [Mesh]
     file = '../Initial_state/run_ns_out.e'
 []

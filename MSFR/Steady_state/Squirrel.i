@@ -45,7 +45,15 @@ lambda6 = 2.91303
     type = MooseVariableFVReal
     initial_from_file_var = 'power_density'
   []
+  [power_density_scaled]
+    type = MooseVariableFVReal
+    initial_from_file_var = 'power_density'
+  []
   [fission_source]
+    type = MooseVariableFVReal
+    initial_from_file_var = 'fission_source'
+  []
+  [fission_source_scaled]
     type = MooseVariableFVReal
     initial_from_file_var = 'fission_source'
   []
@@ -87,6 +95,20 @@ lambda6 = 2.91303
   []
 []
 
+[AuxKernels]
+    [power_scaling]
+        type = ScalarMultiplication
+        variable = power_density_scaled
+        source_variable = power_density 
+        factor = power_scalar
+    []
+    [fs_scaling]
+        type = ScalarMultiplication
+        variable = fission_source_scaled
+        source_variable = fission_source 
+        factor = power_scalar
+    []
+[]
 
 [Functions]
   [insertion_func]
@@ -114,7 +136,22 @@ lambda6 = 2.91303
 
 
 [Postprocessors]
- [Calc_rho]
+ [rho_T]
+   type = TemperatureFeedbackInt
+   variable = T
+   flux = flux
+   T_ref = T_ref
+   total_rho = ${fparse -10e-5}
+   Norm = flux_int
+   block = 1
+ []
+ [flux_int]
+   type = ElementIntegralVariablePostprocessor
+   execute_on = 'INITIAL TIMESTEP_END'
+   variable = flux
+   block = 1
+ []
+ [Rho_Flow]
   type = ParsedPostprocessor
   function = 'beta-S'
   pp_names = 'S'
