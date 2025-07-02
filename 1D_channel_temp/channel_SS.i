@@ -75,7 +75,7 @@ vel = 1
     type = FVCoupledForce
     variable = C
     coef =   ${fparse -lambda}
-    v = "C"
+    v = 1
   []
   #DNP production kernel
   [C_external]
@@ -111,7 +111,7 @@ vel = 1
     type = FVCoupledForce
     variable = T
     coef =   -0.1
-    v = "T"
+    v = 1
     block = "0"
   []
 []

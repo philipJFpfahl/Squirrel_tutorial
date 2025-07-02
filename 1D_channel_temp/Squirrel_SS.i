@@ -78,7 +78,7 @@ nx =50
 [Executioner]
   type = Transient
   dt = 1e9
-  end_time = 1e9
+  end_time = 1e19
   solve_type = 'PJFNK'
   petsc_options_iname = '-pc_type -pc_factor_shift_type'
   petsc_options_value = 'lu NONZERO'
