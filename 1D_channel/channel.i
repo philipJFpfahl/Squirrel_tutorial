@@ -2,7 +2,7 @@
 # Properties 
 ################################################################################
 L = 10
-beta = 600e-5
+beta = 100e-5
 lambda = 1
 vel = 1
 
@@ -63,7 +63,7 @@ vel = 1
     type = FVCoupledForce
     variable = C
     coef =   ${fparse -lambda}
-    v = "C"
+    v = 1
   []
   #DNP production kernel
   [C_external]

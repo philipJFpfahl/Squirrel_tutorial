@@ -1,12 +1,12 @@
 ################################################################################
 # Properties 
 ################################################################################
-beta = 600e-5
+beta = 100e-5
 lambda = 1
 LAMBDA = 1e-4
 
-rho_external = 
-
+rho_external = 0 #1.217096e-03
+ 
 ################################################################################
 # Meshing 
 ################################################################################
@@ -65,7 +65,7 @@ rho_external =
       family = MONOMIAL
       order = CONSTANT
       fv = true
-      initial_from_file_var = ''
+      initial_from_file_var = 'C'
   []
 []
 
@@ -82,7 +82,7 @@ rho_external =
   [insertion_func]
     type = PiecewiseConstant
     xy_data = '0  0
-               1  0'
+               1  1e-4'
   []
 []
 

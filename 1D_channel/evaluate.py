@@ -18,7 +18,7 @@ t =  data[0]
 results = data[-1]
 
 plt.plot(t,results, label = "Power ",  alpha = 0.5)
-plt.plot(t+1.01, P(t, rho, beta, Lambda, lam)*results[0],"--", label = "Power analytical", color = "b")
+plt.plot(t+1, P(t, rho, beta, Lambda, lam)*results[0],"--", label = "Power analytical", color = "b")
 plt.grid()
 plt.xlabel("time")
 plt.ylabel("Power")

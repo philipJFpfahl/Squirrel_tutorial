@@ -2,7 +2,7 @@
 # Properties 
 ################################################################################
 L = 10
-beta = 600e-5
+beta = 100e-5
 lambda = 1
 nx = 50 
 vel = 1
@@ -68,7 +68,7 @@ vel = 1
     type = FVCoupledForce
     variable = C
     coef =   ${fparse -lambda}
-    v = "C"
+    v = 1
   []
   #DNP production kernel
   [C_external]
@@ -83,6 +83,7 @@ vel = 1
 ################################################################################
 # Boundary and Initial conditions 
 ################################################################################
+
 [FVBCs]
   [inlet_C]
     type = FVFunctorDirichletBC
@@ -97,6 +98,7 @@ vel = 1
     boundary = 'right'
   []
 []
+
 
 [FVICs]
   [flux_ic]
@@ -133,7 +135,7 @@ vel = 1
     cutback_factor = 0.5
   []
   steady_state_detection = true
-  steady_state_tolerance = 1e-12
+  steady_state_tolerance = 1e-13
 
   # Time integration scheme
   scheme = 'implicit-euler'
@@ -143,8 +145,8 @@ vel = 1
   line_search = 'none'
 
   # nonlinear solver parameters
-  nl_rel_tol = 2e-13
-  nl_abs_tol = 2e-13
+  nl_rel_tol = 2e-14
+  nl_abs_tol = 2e-14
   nl_abs_div_tol = 1e11
   nl_max_its = 15
 
@@ -178,17 +180,12 @@ vel = 1
     variable = 'C'
     execute_on = " initial timestep_end"
   []
-    [integral_flux]
-        type = ElementIntegralVariablePostprocessor
-        variable = flux
-        block = 1
-    []
 []
 
 [MultiApps]
     [Squirrel]
       type = TransientMultiApp
-      input_files = ""
+      input_files = "Squirrel_SS.i"
       execute_on= "timestep_end "
       sub_cycling = true #false
     []
@@ -197,9 +194,9 @@ vel = 1
 [Transfers]
     [push_C]
         type = MultiAppGeneralFieldShapeEvaluationTransfer
-        to_multi_app =  
-        source_variable =  
-        variable = 
+        to_multi_app = Squirrel 
+        source_variable = C 
+        variable = C
         execute_on= "timestep_end initial"
     [] 
 []

@@ -4,8 +4,8 @@
 L = 10
 beta = 600e-5
 lambda = 1
-nx =  
-vel = 
+nx = 50 
+vel = 0
 
 ################################################################################
 # Meshing 
@@ -69,7 +69,7 @@ vel =
     type = FVCoupledForce
     variable = C
     coef =   ${fparse -lambda}
-    v = "C"
+    v = 1
   []
   #DNP production kernel
   [C_external]

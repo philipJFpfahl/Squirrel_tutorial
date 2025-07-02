@@ -100,9 +100,19 @@ vel = 1
   []
   #Heat source Kernel
   [T_heating]
+    type = FVCoupledForce
+    variable = T
+    coef = 1e2  
+    v = 'flux'
+    block = '1'
   []
   #HX kernel
   [T_cooling]
+    type = FVCoupledForce
+    variable = T
+    coef =   -0.1
+    v = "T"
+    block = "0"
   []
 []
 
@@ -130,6 +140,10 @@ vel = 1
     functor = BC_T 
   []
   [Outlet_T]
+    type = FVConstantScalarOutflowBC
+    velocity = '${vel} 0 0'
+    variable = T
+    boundary = 'right'
   []
 []
 
@@ -241,6 +255,11 @@ vel = 1
         execute_on= "timestep_end initial"
     [] 
     [push_T]
+        type = MultiAppGeneralFieldShapeEvaluationTransfer
+        to_multi_app = Squirrel 
+        source_variable = T 
+        variable = T
+        execute_on= "timestep_end initial"
     [] 
 []
 

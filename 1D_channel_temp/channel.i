@@ -71,7 +71,7 @@ vel = 1
     type = FVCoupledForce
     variable = C
     coef =   ${fparse -lambda}
-    v = "C"
+    v = "1"
   []
   #DNP production kernel
   [C_external]
@@ -96,16 +96,25 @@ vel = 1
   []
   #Heat source Kernel
   [T_heating]
+    type = FVCoupledForce
+    variable = T
+    coef = 1e2  
+    v = 'flux'
+    block = '1'
   []
   #HX kernel
   [T_cooling]
+    type = FVCoupledForce
+    variable = T
+    coef =   -0.1
+    v = "1"
+    block = "0"
   []
 []
 
 ################################################################################
 # Boundary and Initial conditions 
 ################################################################################
-
 [FVBCs]
   [inlet_C]
     type = FVFunctorDirichletBC
@@ -140,7 +149,7 @@ vel = 1
 [Executioner]
   type = Transient
 
-  end_time = 10
+  end_time = 5
 
   dt = 0.1
 
@@ -216,8 +225,18 @@ vel = 1
         execute_on= "timestep_end initial"
     [] 
     [push_T]
+        type = MultiAppGeneralFieldShapeEvaluationTransfer
+        to_multi_app = Squirrel 
+        source_variable = T 
+        variable = T
+        execute_on= "timestep_end initial"
     [] 
     [pull_flux]
+        type = MultiAppGeneralFieldShapeEvaluationTransfer
+        from_multi_app = Squirrel 
+        source_variable = flux_scaled 
+        variable = flux
+        execute_on= "timestep_end initial"
     [] 
 []
 

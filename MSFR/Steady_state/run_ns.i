@@ -430,6 +430,7 @@ petsc_options_value_prec = 'lu NONZERO'
 [MultiApps]
     [Squirrel]
       type = TransientMultiApp
+      #input_files = "Squirrel_SS.i"
       input_files = "Squirrel.i"
       execute_on= "timestep_end "
       sub_cycling = false
@@ -477,27 +478,6 @@ petsc_options_value_prec = 'lu NONZERO'
         to_multi_app = Squirrel 
         source_variable = c6 
         variable = c6
-        execute_on= "timestep_end initial"
-    [] 
-    [push_T]
-        type = MultiAppGeneralFieldShapeEvaluationTransfer
-        to_multi_app = Squirrel 
-        source_variable = T_fluid 
-        variable = T
-        execute_on= "timestep_end initial"
-    [] 
-    [pull_power]
-        type = MultiAppGeneralFieldShapeEvaluationTransfer
-        from_multi_app = Squirrel 
-        source_variable = power_density_scaled 
-        variable = power_density
-        execute_on= "timestep_end initial"
-    [] 
-    [pull_fs]
-        type = MultiAppGeneralFieldShapeEvaluationTransfer
-        from_multi_app = Squirrel 
-        source_variable = fission_source_scaled 
-        variable = fission_source
         execute_on= "timestep_end initial"
     [] 
 []

@@ -1,6 +1,3 @@
-#rho_external = ${fparse 2.022985e-03}
-rho_external = ${fparse 1.932381e-03+1.461588e-05 }
-LAMBDA = 8.57e-7
 beta =0.0030207957
 lambda1 = 0.0133104
 lambda2 = 0.0305427
@@ -8,10 +5,10 @@ lambda3 = 0.115179
 lambda4 = 0.301152
 lambda5 = 0.879376
 lambda6 = 2.91303
+
 [Problem]
   allow_initial_conditions_with_restart = true
 []
-
 [Mesh]
     file = '../Initial_state/run_ns_out.e'
 []
@@ -29,16 +26,7 @@ lambda6 = 2.91303
     type = ODETimeDerivative
     variable = power_scalar
   []
-  [expression]
-    type = ParsedODEKernel
-    expression = '-(rho_external+rho_temp+rho_insertion-beta)/LAMBDA*power_scalar-A/LAMBDA'
-    constant_expressions = '${fparse rho_external} ${fparse beta} ${fparse LAMBDA}'
-    constant_names = 'rho_external beta LAMBDA'
-    variable = power_scalar
-    postprocessors = 'rho_temp A rho_insertion '
-  []
 []
-
 
 [AuxVariables]
   [power_density]
@@ -98,7 +86,7 @@ lambda6 = 2.91303
 [Executioner]
   type = Transient
   dt = 1e9
-  end_time = 1e9
+  end_time = 10
   solve_type = 'PJFNK'
   petsc_options_iname = '-pc_type -pc_factor_shift_type'
   petsc_options_value = 'lu NONZERO'
