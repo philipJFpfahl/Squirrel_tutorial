@@ -52,7 +52,7 @@ beta6 = 0.000184087
   coord_type = 'RZ'
   rz_coord_axis = Y
   [restart]
-    file = '../Griffin/Griffin_out.e'
+    file = '../Initial/Initial_out.e'
     type = FileMeshGenerator
     use_for_exodus_restart = true
   []
