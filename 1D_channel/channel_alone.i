@@ -5,7 +5,7 @@ L = 10
 beta = 600e-5
 lambda = 1
 nx = 50 
-vel = 0
+vel = 0 #1
 
 ################################################################################
 # Meshing 
@@ -69,7 +69,7 @@ vel = 0
     type = FVCoupledForce
     variable = C
     coef =   ${fparse -lambda}
-    v = 1
+    v = "C"
   []
   #DNP production kernel
   [C_external]
@@ -111,7 +111,6 @@ vel = 0
 [Functions]
   [parsed_function]
     type = ParsedFunction
-    # area = 1
     expression = '0.5*sin(2*x*pi/L)'
     symbol_names = 'L'
     symbol_values = '${L}'
@@ -125,7 +124,7 @@ vel = 0
 [Executioner]
   type = Transient
 
-  end_time = 10
+  end_time = 100
 
   dt = 0.1
 

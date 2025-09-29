@@ -2,7 +2,7 @@
 # Properties 
 ################################################################################
 L = 10
-beta = 100e-5
+beta = 600e-5
 lambda = 1
 vel = 1
 
@@ -63,7 +63,7 @@ vel = 1
     type = FVCoupledForce
     variable = C
     coef =   ${fparse -lambda}
-    v = 1
+    v = "C"
   []
   #DNP production kernel
   [C_external]
@@ -103,7 +103,7 @@ vel = 1
 
   end_time = 10
 
-  dt = 0.1
+  dt = 0.01
 
   # Time integration scheme
   scheme = 'implicit-euler'
