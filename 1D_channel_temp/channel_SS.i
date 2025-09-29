@@ -4,7 +4,7 @@
 L = 10
 beta = 600e-5
 lambda = 1
-nx = 50 
+nx = 500 
 vel = 1
 
 ################################################################################
@@ -75,7 +75,7 @@ vel = 1
     type = FVCoupledForce
     variable = C
     coef =   ${fparse -lambda}
-    v = 1
+    v = C
   []
   #DNP production kernel
   [C_external]
@@ -111,7 +111,7 @@ vel = 1
     type = FVCoupledForce
     variable = T
     coef =   -0.1
-    v = 1
+    v = T
     block = "0"
   []
 []
@@ -183,7 +183,7 @@ vel = 1
     cutback_factor = 0.5
   []
   steady_state_detection = true
-  steady_state_tolerance = 1e-12
+  steady_state_tolerance = 1e-16
 
   # Time integration scheme
   scheme = 'implicit-euler'
@@ -193,9 +193,9 @@ vel = 1
   line_search = 'none'
 
   # nonlinear solver parameters
-  nl_rel_tol = 2e-13
-  nl_abs_tol = 2e-13
-  nl_abs_div_tol = 1e11
+  nl_rel_tol = 2e-12
+  nl_abs_tol = 2e-12
+  nl_abs_div_tol = 1e14
   nl_max_its = 15
 
   # linear solver parameters
@@ -235,6 +235,18 @@ vel = 1
     variable = 'T'
     execute_on = " initial timestep_end"
   []
+ [T_int]
+   type = ElementIntegralVariablePostprocessor
+   execute_on = 'INITIAL TIMESTEP_END'
+   variable = T
+   block = 1
+ []
+ [C_int]
+   type = ElementIntegralVariablePostprocessor
+   execute_on = 'INITIAL TIMESTEP_END'
+   variable = C
+   block = 1
+ []
 []
 
 [MultiApps]

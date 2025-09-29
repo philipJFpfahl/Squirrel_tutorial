@@ -4,7 +4,7 @@
 beta = 600e-5
 lambda = 1
 LAMBDA = 1e-4
-rho_external = 1.217096e-03
+rho_external =1.211704e-03
 
 ################################################################################
 # Meshing 
@@ -129,7 +129,7 @@ rho_external = 1.217096e-03
  [flux_int]
    type = ElementIntegralVariablePostprocessor
    execute_on = 'INITIAL TIMESTEP_END'
-   variable = flux
+   variable = flux_scaled
    block = 1
  []
  [Rho_Flow]
