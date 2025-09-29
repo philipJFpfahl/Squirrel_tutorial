@@ -1,9 +1,0 @@
-#!/bin/bash
-#SBATCH --job-name=cool->   # Job name
-#SBATCH --mail-type=NONE          # Mail events (NONE, BEGIN, END, FAIL, ALL)
-#SBATCH --mail-user=pjfpf@dtu.dk     # Where to send mail	
-#SBATCH --ntasks=16                  # Run on a single CPU
-
-ml OpenMPI
-mpiexec -n 16 ../../Squirrel/squirrel-opt -i run_ns.i
-
