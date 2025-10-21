@@ -72,10 +72,8 @@ Two variables are defined. The DNP concentration with one group and the flux in 
 Now we define the Kernels to solve:
 
 
-```
 $$\frac{\partial  c(x,t)}{\partial t}   =  \beta flux(x) - \lambda  c(x,t)  - \frac{\partial}{\partial x}\mathbf{U}(x,t) c(x, t) + D \frac{\partial}{\partial x^2} c(x,t)$$
 
-```
 
 
 ```
