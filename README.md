@@ -40,8 +40,10 @@ If you just want to run the steady state and transient calculation:
 ```
 That will give you a steady state soultion. From this solution the transient will restart. The transient is a 10 pcm insertion, without any temperature feedback.
 
-### The channel_SS.i file
-Two variables are defined. The DNP concentration with one group and the flux in the channel. 
+### The steady state caclulations.
+
+Beginning with the channel_SS.i file:
+Two variables are defined. The DNP concentration "C" with one group and the flux "flux" in the channel. 
 
 ```
 ################################################################################
@@ -72,8 +74,7 @@ Two variables are defined. The DNP concentration with one group and the flux in 
 Now we define the Kernels to solve:
 
 
-$$\frac{\partial  c(x,t)}{\partial t}   =  \beta flux(x) - \lambda  c(x,t)  - \frac{\partial}{\partial x}\mathbf{U}(x,t) c(x, t) + D \frac{\partial}{\partial x^2} c(x,t)$$
-
+$$\frac{\partial  c(x,t)}{\partial t}   =  \beta flux(x) - \lambda  c(x,t)  - \frac{\partial}{\partial x}\mathbf{U}(x,t) c(x, t) $$
 
 
 ```
@@ -86,19 +87,6 @@ $$\frac{\partial  c(x,t)}{\partial t}   =  \beta flux(x) - \lambda  c(x,t)  - \f
     type = FVTimeKernel
     variable = C
   []
-  #Advection kernel
-  [C_advection]
-    type = FVAdvection
-    variable = C
-    velocity = '${vel} 0 0'
-  []
-  #DNP decay kernel
-  [C_interal]
-    type = FVCoupledForce
-    variable = C
-    coef =   ${fparse -lambda}
-    v = C
-  []
   #DNP production kernel
   [C_external]
     type = FVCoupledForce
@@ -107,10 +95,168 @@ $$\frac{\partial  c(x,t)}{\partial t}   =  \beta flux(x) - \lambda  c(x,t)  - \f
     v = 'flux'
     block = '1'
   []
+  #DNP decay kernel
+  [C_interal]
+    type = FVCoupledForce
+    variable = C
+    coef =   ${fparse -lambda}
+    v = C
+  []
+  #Advection kernel
+  [C_advection]
+    type = FVAdvection
+    variable = C
+    velocity = '${vel} 0 0'
+  []
 []
 ```
+There is a time kernel, a production kernel (restricted to block 1, where the reactor is critical), a decay kernel, and an advection kernel. 
 We will assume that the flux, and the fission rate are the same. That is not correct, but could be corrected with a simple factor that canceled in the equation. It is still possible to simply add that factor.
 
+Likewise we will define a outflow and inflow boundary condition for the advected DNP concentration.
+
+```
+################################################################################
+# Boundary and Initial conditions 
+################################################################################
+[FVBCs]
+  [inlet_C]
+    type = FVFunctorDirichletBC
+    boundary = 'left'
+    variable = C
+    functor = BC_C 
+  []
+  [Outlet_C]
+    type = FVConstantScalarOutflowBC
+    velocity = '${vel} 0 0'
+    variable = C
+    boundary = 'right'
+  []
+[]
+
+```
+And we define the shape of the flux on the whole domain.
+
+```
+[FVICs]
+  [flux_ic]
+    type = FVFunctionIC
+    variable = 'flux'
+    function = parsed_function
+  []
+[]
+
+[Functions]
+  [parsed_function]
+    type = ParsedFunction
+    expression = '0.5*sin(2*x*pi/L)'
+    symbol_names = 'L'
+    symbol_values = '${L}'
+  []
+[]
+```
+
+With the time steper we let the solution converge 
 
 
+```
+  [TimeStepper]
+    type = IterationAdaptiveDT
+    dt = 0.001
+    optimal_iterations = 20
+    iteration_window = 2
+    growth_factor = 2
+    cutback_factor = 0.5
+  []
+
+```
+
+
+The DNP concnetration will be send to the Squirrel_SS.i file.
+
+
+```
+[MultiApps]
+    [Squirrel]
+      type = TransientMultiApp
+      input_files = "Squirrel_SS.i"
+      execute_on= "timestep_end "
+      sub_cycling = false
+    []
+[]
+
+[Transfers]
+    [push_C]
+        type = MultiAppGeneralFieldShapeEvaluationTransfer
+        to_multi_app = Squirrel 
+        source_variable = C  
+        variable = C
+        execute_on= "timestep_end initial"
+    [] 
+[]
+
+```
+Now in the Squirrel_SS.i file:
+
+The transfered information is used to calculate the static reactivity loss. 
+
+We define the same variable on the same mesh, but both are known values.
+
+```
+[AuxVariables]
+  [flux]
+    type = MooseVariableFVReal
+  []
+  [C]
+      family = MONOMIAL
+      order = CONSTANT
+      fv = true
+  []
+[]
+```
+
+using the post processors of Squirrel we can calculate the static reactivity loss due to the flowing fuel.
+
+```
+[Postprocessors]
+ [Rho_Flow]
+  type = ParsedPostprocessor
+  function = 'beta-S'
+  pp_names = 'S'
+  constant_names =  'beta'
+  constant_expressions ='${beta}'
+ []
+ [B]
+  type = TwoValuesL2Norm
+  variable = flux
+  other_variable = flux
+  execute_on = 'initial'
+  execution_order_group = -1
+  block = 1
+ []
+ [S] 
+  type = WeightDNPPostprocessor
+  variable = flux
+  other_variable = C
+  Norm = B
+  lambda = ${lambda}
+  execute_on = 'initial timestep_end'
+  block = 1
+ [] 
+[]
+
+```
+in this example the loss should be 121.7 pcm
+
+```
+Squirrel0: +----------------+----------------+----------------+----------------+
+Squirrel0: | time           | B              | Rho_Flow       | S              |
+Squirrel0: +----------------+----------------+----------------+----------------+
+Squirrel0: |   1.048575e+03 |   7.905694e-01 |   1.217096e-03 |   4.782904e-03 |
+Squirrel0: +----------------+----------------+----------------+----------------+
+```
+
+we can see that it is reached after ~1000s. 
+
+### The transient caclulations.
 ## 1D channel temp
