@@ -259,4 +259,188 @@ Squirrel0: +----------------+----------------+----------------+----------------+
 we can see that it is reached after ~1000s. 
 
 ### The transient caclulations.
+
+For the channel.i file:
+
+Not much is changing since the thermal hydraulics stays the same.
+We will now do a normal resart using the channel_SS_out.e file.
+
+```
+[Mesh]
+  file = 'channel_SS_out.e'
+[]
+
+[Problem]
+    kernel_coverage_check=false
+    allow_initial_conditions_with_restart = true
+[]
+
+################################################################################
+# Define variables that are solved for 
+################################################################################
+[Variables]
+  [C]
+      family = MONOMIAL
+      order = CONSTANT
+      fv = true
+      initial_from_file_var = 'C'
+  []
+[]
+
+################################################################################
+# Define variables that are known 
+################################################################################
+[AuxVariables]
+    [flux]
+        family = MONOMIAL
+        order = CONSTANT
+        fv = true
+        initial_from_file_var = 'flux'
+    []
+[]
+```
+
+Additionally we will now pull the updated flux from Squirrel.i 
+
+```
+################################################################################
+# Use Transient Squirrel 
+################################################################################
+[MultiApps]
+    [Squirrel]
+      type = TransientMultiApp
+      input_files = "Squirrel.i"
+      execute_on= "timestep_end "
+      sub_cycling = true #false
+    []
+[]
+
+[Transfers]
+    [push_C]
+        type = MultiAppGeneralFieldShapeEvaluationTransfer
+        to_multi_app = Squirrel 
+        source_variable = C 
+        variable = C
+        execute_on= "timestep_end initial"
+    [] 
+    [pull_flux]
+        type = MultiAppGeneralFieldShapeEvaluationTransfer
+        from_multi_app = Squirrel 
+        source_variable = flux_scaled 
+        variable = flux
+        execute_on= "timestep_end initial"
+    [] 
+[]
+```
+
+For the Squirrel.i file 
+
+We now want to have a transient, so that the scalar power can go up or down. 
+
+To have a steady state we need to compensate the reactivity loss due to the DNP advection. To do that a external reactivity is inserted called 
+"rho_external".
+
+
+```
+################################################################################
+# Properties 
+################################################################################
+beta = 600e-5
+lambda = 1
+LAMBDA = 1e-4
+
+rho_external = 1.217096e-03
+```
+
+Now we restart from the file
+
+
+```
+[Mesh]
+  file = 'channel_SS_out_Squirrel0.e'
+[]
+[Problem]
+    kernel_coverage_check=false
+    allow_initial_conditions_with_restart = true
+[]
+[AuxVariables]
+  [flux]
+    type = MooseVariableFVReal
+    initial_from_file_var = 'flux'
+  []
+  [C]
+      family = MONOMIAL
+      order = CONSTANT
+      fv = true
+      initial_from_file_var = 'C'
+  []
+[]
+
+```
+Additionally we introduce a scaled flux, in contrast to the initial flux. This scaled flux is transfered to the channel.i file.
+
+The scaling is done with an Aux Kerel:
+
+```
+[AuxKernels]
+    [power_scaling]
+        type = ScalarMultiplication
+        variable = flux_scaled
+        source_variable = flux 
+        factor = power_scalar
+    []
+[]
+```
+
+Now we calucalte the factor or the scalar power. Initially we normalize it to 1. 
+
+```
+[Variables]
+  [power_scalar]
+    family = SCALAR
+    order = FIRST
+    initial_condition = 1
+  []
+[]
+
+```
+We then solve the power equation: 
+$$  \frac{\text{d} p(t)}{\text{d} t} &= \frac{\left(  \rho_{insertion} + \rho_{external} - \beta \right)}{\Lambda} p(t) + \frac{S}{\Lambda}
+With the MOOSE Scalar Kernel solver:
+
+```
+[ScalarKernels]
+  [Dt]
+    type = ODETimeDerivative
+    variable = power_scalar
+  []
+################################################################################
+# add the right hand side of the ODE 
+################################################################################
+  [expression]
+    type = ParsedODEKernel
+    expression = '-(rho_external+rho_insertion-beta)/LAMBDA*power_scalar-S/LAMBDA'
+    constant_expressions = '${fparse rho_external} ${fparse beta} ${fparse LAMBDA}'
+    constant_names = 'rho_external beta LAMBDA'
+    variable = power_scalar
+    postprocessors = 'S rho_insertion '
+  []
+[]
+```
+
+This system should be at steady state for rho_insertion = 0. We test this with an insertion of 10pcm after 1 s. For that we define a insertion function:
+
+```
+[Functions]
+  [insertion_func]
+    type = PiecewiseConstant
+    xy_data = '0  0
+               1  1e-4'
+  []
+[]
+```
+
+
+
+
 ## 1D channel temp
