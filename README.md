@@ -12,7 +12,7 @@ This tutorial shows how to calculate a steady state solution of a Molten Salt Re
 ## Model
 The model consits of two areas. One critical area (the core) and a non critical area (outside of the core).
 
-'''
+```
 [Mesh]
     #generate active core region and out of core region
     [cmbn]
@@ -23,7 +23,7 @@ The model consits of two areas. One critical area (the core) and a non critical 
         subdomain_id = '1 0'
       []
 []
-'''
+```
 
 
 ## 1D channel
