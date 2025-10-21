@@ -70,7 +70,7 @@ Two variables are defined. The DNP concentration with one group and the flux in 
 
 
 Now we define the Kernels. The equation we want to solve is
-$$\frac{\partial  c_i(\mathbf{r},t)}{\partial t}   = &\mathbf F_d \Phi(\mathbf{r},t,E, \mathbf{\Omega}) - \lambda_i  c_i(\mathbf{r},t)  - 
+$$\frac{\partial  c_i(\mathbf{r},t)}{\partial t}   = \mathbf F_d \Phi(\mathbf{r},t,E, \mathbf{\Omega}) - \lambda_i  c_i(\mathbf{r},t)  - 
          \nabla \cdot \mathbf{U}( \mathbf r,t ) c_i(\mathbf r, t) + \nabla D(\mathbf{r},t)\nabla c_i(\mathbf{r},t)$$
 
 ```
