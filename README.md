@@ -442,6 +442,7 @@ This system should be at steady state for rho_insertion = 0. We test this with a
 
 In the output we can see that the power raised due to the insertion 
 
+```
 Squirrel0: Scalar Variable Values:
 Squirrel0: +----------------+----------------+
 Squirrel0: | time           | power_scalar   |
@@ -449,6 +450,7 @@ Squirrel0: +----------------+----------------+
 Squirrel0: :                :                :
 Squirrel0: |   1.000000e+01 |   1.318840e+00 |
 Squirrel0: +----------------+----------------+
+```
 
 Since there is no temperature feedback we expected the power to rise continuesly.
 
