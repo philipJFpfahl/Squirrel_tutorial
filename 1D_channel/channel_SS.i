@@ -68,7 +68,7 @@ vel = 1
     type = FVCoupledForce
     variable = C
     coef =   ${fparse -lambda}
-    v = C#1
+    v = C
   []
   #DNP production kernel
   [C_external]
