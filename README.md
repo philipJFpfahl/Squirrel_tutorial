@@ -10,7 +10,7 @@ The 1D channel folder contains all the nessesary inputs to use Squirrel, neglect
 This tutorial shows how to calculate a steady state solution of a Molten Salt Reactor with flowing fuel and how to run a transients from the steady state output. 
 
 ## Model
-The model consits of two areas. One critical area (the core) and a non critical area (outside of the core).
+The mesh consits of two 1 dimensional areas with length L/2. One critical area (the core) and a non critical area (outside of the core).
 
 ```
 [Mesh]
@@ -27,7 +27,89 @@ The model consits of two areas. One critical area (the core) and a non critical 
 
 
 ## 1D channel
-This folder contains four input files. The two input files with the subscript \_SS are for steady state calculations and are used as inputs for the transient simulation.
+This folder contains four input files. The two input files with the subscript \_SS are for steady state calculations and need to be run first. The outputs are used as inputs for the transient simulation.
+
+### Run the input
+If you just want to run the steady state and transient calculation:
+
+```
+./squirrel-opt -i channel_SS.i
+
+./squirrel-opt -i channel.i
+
+```
+That will give you a steady state soultion. From this solution the transient will restart. The transient is a 10 pcm insertion, without any temperature feedback.
+
+### The channel_SS.i file
+Two variables are defined. The DNP concentration with one group and the flux in the channel. 
+
+```
+################################################################################
+# Define variables that are solved for 
+################################################################################
+[Variables]
+  [C]
+      family = MONOMIAL
+      order = CONSTANT
+      fv = true
+  []
+[]
+
+################################################################################
+# Define variables that are known 
+################################################################################
+[AuxVariables]
+    [flux]
+        family = MONOMIAL
+        order = CONSTANT
+        fv = true
+    []
+[]
+
+```
+
+
+Now we define the Kernels. The equation we want to solve is
+$$
+\frac{\partial  c_i(\mathbf{r},t)}{\partial t}   = &\mathbf F_d \Phi(\mathbf{r},t,E, \mathbf{\Omega}) - \lambda_i  c_i(\mathbf{r},t)  - 
+         \nabla \cdot \mathbf{U}( \mathbf r,t ) c_i(\mathbf r, t) + \nabla D(\mathbf{r},t)\nabla c_i(\mathbf{r},t)
+$$
+
+```
+################################################################################
+# Define Kernels 
+################################################################################
+[FVKernels]
+  #Time kernel
+  [C_time]
+    type = FVTimeKernel
+    variable = C
+  []
+  #Advection kernel
+  [C_advection]
+    type = FVAdvection
+    variable = C
+    velocity = '${vel} 0 0'
+  []
+  #DNP decay kernel
+  [C_interal]
+    type = FVCoupledForce
+    variable = C
+    coef =   ${fparse -lambda}
+    v = C
+  []
+  #DNP production kernel
+  [C_external]
+    type = FVCoupledForce
+    variable = C
+    coef = ${fparse beta}  
+    v = 'flux'
+    block = '1'
+  []
+[]
+```
+We will assume that the flux, and the fission rate are the same. That is not correct, but could be corrected with a simple factor that canceled in the equation. It is still possible to simply add that factor.
+
 
 
 ## 1D channel temp
