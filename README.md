@@ -25,6 +25,7 @@ The mesh consits of two 1 dimensional areas with length L/2. One critical area (
 []
 ```
 
+A constant flow of the fuel salt from left to right is assumed. 
 
 ## 1D channel
 This folder contains four input files. The two input files with the subscript \_SS are for steady state calculations and need to be run first. The outputs are used as inputs for the transient simulation.
@@ -46,9 +47,6 @@ Beginning with the channel_SS.i file:
 Two variables are defined. The DNP concentration "C" with one group and the flux "flux" in the channel. 
 
 ```
-################################################################################
-# Define variables that are solved for 
-################################################################################
 [Variables]
   [C]
       family = MONOMIAL
@@ -57,9 +55,6 @@ Two variables are defined. The DNP concentration "C" with one group and the flux
   []
 []
 
-################################################################################
-# Define variables that are known 
-################################################################################
 [AuxVariables]
     [flux]
         family = MONOMIAL
@@ -78,9 +73,6 @@ $$\frac{\partial  c(x,t)}{\partial t}   =  \beta flux(x) - \lambda  c(x,t)  - \f
 
 
 ```
-################################################################################
-# Define Kernels 
-################################################################################
 [FVKernels]
   #Time kernel
   [C_time]
@@ -116,9 +108,6 @@ We will assume that the flux, and the fission rate are the same. That is not cor
 Likewise we will define a outflow and inflow boundary condition for the advected DNP concentration.
 
 ```
-################################################################################
-# Boundary and Initial conditions 
-################################################################################
 [FVBCs]
   [inlet_C]
     type = FVFunctorDirichletBC
@@ -275,9 +264,6 @@ We will now do a normal resart using the channel_SS_out.e file.
     allow_initial_conditions_with_restart = true
 []
 
-################################################################################
-# Define variables that are solved for 
-################################################################################
 [Variables]
   [C]
       family = MONOMIAL
@@ -287,9 +273,6 @@ We will now do a normal resart using the channel_SS_out.e file.
   []
 []
 
-################################################################################
-# Define variables that are known 
-################################################################################
 [AuxVariables]
     [flux]
         family = MONOMIAL
@@ -303,9 +286,6 @@ We will now do a normal resart using the channel_SS_out.e file.
 Additionally we will now pull the updated flux from Squirrel.i 
 
 ```
-################################################################################
-# Use Transient Squirrel 
-################################################################################
 [MultiApps]
     [Squirrel]
       type = TransientMultiApp
@@ -342,9 +322,6 @@ To have a steady state we need to compensate the reactivity loss due to the DNP 
 
 
 ```
-################################################################################
-# Properties 
-################################################################################
 beta = 600e-5
 lambda = 1
 LAMBDA = 1e-4
@@ -405,7 +382,7 @@ Now we calucalte the factor or the scalar power. Initially we normalize it to 1.
 
 ```
 We then solve the power equation: 
-$$  \frac{\text{d} p(t)}{\text{d} t} &= \frac{\left(  \rho_{insertion} + \rho_{external} - \beta \right)}{\Lambda} p(t) + \frac{S}{\Lambda}
+$$\frac{\text{d} p(t)}{\text{d} t} = \frac{\left(  \rho_{insertion} + \rho_{external} - \beta \right)}{\Lambda} p(t) + \frac{S}{\Lambda}$$
 With the MOOSE Scalar Kernel solver:
 
 ```
@@ -414,9 +391,6 @@ With the MOOSE Scalar Kernel solver:
     type = ODETimeDerivative
     variable = power_scalar
   []
-################################################################################
-# add the right hand side of the ODE 
-################################################################################
   [expression]
     type = ParsedODEKernel
     expression = '-(rho_external+rho_insertion-beta)/LAMBDA*power_scalar-S/LAMBDA'
@@ -455,3 +429,41 @@ Squirrel0: +----------------+----------------+
 Since there is no temperature feedback we expected the power to rise continuesly.
 
 ## 1D channel temp
+Now we want to investigate how to include a temperature feedback. 
+
+This folder contains again four input files. The two input files with the subscript \_SS are for steady state calculations and need to be run first. The outputs are used as inputs for the transient simulation.
+
+### Run the input
+Again if you just want to run the steady state and transient calculation do as before
+
+```
+./squirrel-opt -i channel_SS.i
+
+./squirrel-opt -i channel.i
+
+```
+That will give you a steady state soultion. From this solution the transient will restart. The transient is a 10 pcm insertion, with a typical temperature feedback.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
