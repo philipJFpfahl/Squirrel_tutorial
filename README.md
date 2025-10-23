@@ -20,6 +20,19 @@ This tutorial demonstrates the basic application of Squirrel using a **simplifie
 
 Each setup illustrates how to compute a **steady-state** solution for a molten salt reactor with flowing fuel and how to **run transient simulations** from that steady-state condition.
 
+### 📂 Input File Overview
+
+| Input File                   | Description                                            |
+| ---------------------------- | ------------------------------------------------------ |
+| **`channel_SS.i`**           | Steady-state DNP and flux calculation                  |
+| **`Squirrel_SS.i`**          | Reactivity loss postprocessing for steady state        |
+| **`channel.i`**              | Transient simulation restart (no temperature feedback) |
+| **`Squirrel.i`**             | Power evolution and flux scaling during transient      |
+| **`channel_SS.i`** *(temp)*  | Steady-state with temperature variable                 |
+| **`Squirrel_SS.i`** *(temp)* | Steady-state with thermal feedback enabled             |
+| **`channel.i`** *(temp)*     | Transient with temperature feedback                    |
+| **`Squirrel.i`** *(temp)*    | Transient calculation with thermal reactivity effects  |
+
 ### Run Instructions
 
 To run the steady-state and transient calculations:
@@ -159,47 +172,17 @@ Output:
 ➡️ The temperature feedback stabilizes the power, returning it close to the steady-state value.
 
 ---
-
-## 📊 Results Summary
-
-| Case              | Reactivity Insertion | Temperature Feedback | Final Power (at 10 s) | Behavior                         |
-| ----------------- | -------------------- | -------------------- | --------------------- | -------------------------------- |
-| 1D Channel        | +10 pcm              | ❌ No                 | 1.32× steady-state    | Power rises continuously         |
-| 1D Channel (Temp) | +10 pcm              | ✅ Yes                | 1.00× steady-state    | Power stabilizes due to feedback |
-
----
-
-## 🖼️ Suggested Result Figures
-
-You can include these plots in the results section:
-
-1. **Power vs. Time** – for both transients
-   → *Plot from `power_scalar` output.*
-2. **Temperature vs. Position (steady state)** – from `T` field
-   → *Compare core vs. outlet region.*
-3. **Reactivity Components** – show `rho_insertion`, `rho_T`, and `rho_external` evolution.
-
-Example placeholder (insert your plot later):
-
 ```markdown
-![Power Transient Comparison](results/power_transient_comparison.png)
+![Power Transient Comparison](Results.pdf)
 *Figure 1: Power evolution for transients with and without temperature feedback.*
 ```
-
 ---
 
-## 📂 Input File Overview
 
-| Input File                   | Description                                            |
-| ---------------------------- | ------------------------------------------------------ |
-| **`channel_SS.i`**           | Steady-state DNP and flux calculation                  |
-| **`Squirrel_SS.i`**          | Reactivity loss postprocessing for steady state        |
-| **`channel.i`**              | Transient simulation restart (no temperature feedback) |
-| **`Squirrel.i`**             | Power evolution and flux scaling during transient      |
-| **`channel_SS.i`** *(temp)*  | Steady-state with temperature variable                 |
-| **`Squirrel_SS.i`** *(temp)* | Steady-state with thermal feedback enabled             |
-| **`channel.i`** *(temp)*     | Transient with temperature feedback                    |
-| **`Squirrel.i`** *(temp)*    | Transient calculation with thermal reactivity effects  |
+
+
+
+
 
 ---
 

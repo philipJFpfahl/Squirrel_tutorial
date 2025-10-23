@@ -151,7 +151,7 @@ vel = 1
 
   end_time = 10
 
-  dt = 0.1
+  dt = 0.01
 
   # Time integration scheme
   scheme = 'implicit-euler'
