@@ -171,20 +171,6 @@ Output:
 
 ➡️ The temperature feedback stabilizes the power, returning it close to the steady-state value.
 
----
-```markdown
-![Power Transient Comparison](Results.pdf)
-*Figure 1: Power evolution for transients with and without temperature feedback.*
-```
----
-
-
-
-
-
-
-
----
 
 ## 🧠 Notes
 
