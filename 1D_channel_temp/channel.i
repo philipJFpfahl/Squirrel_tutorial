@@ -149,7 +149,7 @@ vel = 1
 [Executioner]
   type = Transient
 
-  end_time = 5
+  end_time = 10
 
   dt = 0.1
 
