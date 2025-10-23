@@ -1,4 +1,4 @@
-# Squirrel Tutorial
+# Sqrrel Tutorial
 
 To download Squirrel, for the theory and an explanation of the kernels see the Squirrel github: https://github.com/philipJFpfahl/Squirrel
 These inputs where part of a DTU university course.
@@ -9,7 +9,7 @@ In this tutorial the basic application of Squirrel is shown with an simplified 1
 The 1D channel folder contains all the nessesary inputs to use Squirrel, neglecting temperature effects. The 1D channel temp folder contains the same inputs with themperature feedback.
 This tutorial shows how to calculate a steady state solution of a Molten Salt Reactor with flowing fuel and how to run a transients from the steady state output. 
 
-## Model
+# Model
 The mesh consits of two 1 dimensional areas with length L/2. One critical area (the core) and a non critical area (outside of the core).
 
 ```
@@ -27,10 +27,10 @@ The mesh consits of two 1 dimensional areas with length L/2. One critical area (
 
 A constant flow of the fuel salt from left to right is assumed. 
 
-## 1D channel
+# 1D channel
 This folder contains four input files. The two input files with the subscript \_SS are for steady state calculations and need to be run first. The outputs are used as inputs for the transient simulation.
 
-### Run the input
+# Run the input
 If you just want to run the steady state and transient calculation:
 
 ```
@@ -41,7 +41,7 @@ If you just want to run the steady state and transient calculation:
 ```
 That will give you a steady state soultion. From this solution the transient will restart. The transient is a 10 pcm insertion, without any temperature feedback.
 
-### The steady state caclulations.
+## The steady state caclulations
 
 Beginning with the channel_SS.i file:
 Two variables are defined. The DNP concentration "C" with one group and the flux "flux" in the channel. 
@@ -204,7 +204,8 @@ We define the same variable on the same mesh, but both are known values.
 []
 ```
 
-using the post processors of Squirrel we can calculate the static reactivity loss due to the flowing fuel.
+Using the post processors of Squirrel we can calculate the static reactivity loss due to the flowing fuel "Rho_flow" and the spacialy weighted (or effective) DNP source "S". 
+
 
 ```
 [Postprocessors]
@@ -247,7 +248,7 @@ Squirrel0: +----------------+----------------+----------------+----------------+
 
 we can see that it is reached after ~1000s. 
 
-### The transient caclulations.
+## The transient caclulation
 
 For the channel.i file:
 
@@ -381,10 +382,11 @@ Now we calucalte the factor or the scalar power. Initially we normalize it to 1.
 []
 
 ```
-We then solve the power equation: 
-$$\frac{\text{d} p(t)}{\text{d} t} = \frac{\left(  \rho_{insertion} + \rho_{external} - \beta \right)}{\Lambda} p(t) + \frac{S}{\Lambda}$$
-With the MOOSE Scalar Kernel solver:
+We then solve the power equation 
 
+$$\frac{\text{d} p(t)}{\text{d} t} = \frac{\left(  \rho_{insertion} + \rho_{external} - \beta \right)}{\Lambda} p(t) + \frac{S}{\Lambda}$$
+
+with the MOOSE Scalar Kernel solver:
 ```
 [ScalarKernels]
   [Dt]
@@ -428,12 +430,12 @@ Squirrel0: +----------------+----------------+
 
 Since there is no temperature feedback we expected the power to rise continuesly.
 
-## 1D channel temp
+# 1D channel temp
 Now we want to investigate how to include a temperature feedback. 
 
 This folder contains again four input files. The two input files with the subscript \_SS are for steady state calculations and need to be run first. The outputs are used as inputs for the transient simulation.
 
-### Run the input
+## Run the input
 Again if you just want to run the steady state and transient calculation do as before
 
 ```
@@ -445,18 +447,174 @@ Again if you just want to run the steady state and transient calculation do as b
 That will give you a steady state soultion. From this solution the transient will restart. The transient is a 10 pcm insertion, with a typical temperature feedback.
 
 
+## The steady state caclulations
+
+We use the same input as we had before, but now with a temperature variable. 
+
+We start by defining the variable:
+
+```
+[Variables]
+  [T]
+      family = MONOMIAL
+      order = CONSTANT
+      fv = true
+  []
+[]
+```
+
+And we define a corresponding kernel for the advection of the temperature, the heating in the active core region and the cooling in the heatexchanger. 
 
 
+```
+[FVKernels]
+  [T_time]
+    type = FVTimeKernel
+    variable = T
+  []
+  #Advection kernel
+  [T_advection]
+    type = FVAdvection
+    variable = T
+    velocity = '${vel} 0 0'
+  []
+  #Heat source Kernel
+  [T_heating]
+    type = FVCoupledForce
+    variable = T
+    coef = 1e2  
+    v = 'flux'
+    block = '1'
+  []
+  #HX kernel
+  [T_cooling]
+    type = FVCoupledForce
+    variable = T
+    coef =   -0.1
+    v = T
+    block = "0"
+  []
+[]
+```
 
 
+Additionally we define the boundary conditions: 
+
+```
+[FVBCs]
+  [inlet_C]
+    type = FVFunctorDirichletBC
+    boundary = 'left'
+    variable = C
+    functor = BC_C 
+  []
+  [Outlet_C]
+    type = FVConstantScalarOutflowBC
+    velocity = '${vel} 0 0'
+    variable = C
+    boundary = 'right'
+  []
+  [inlet_T]
+    type = FVFunctorDirichletBC
+    boundary = 'left'
+    variable = T
+    functor = BC_T 
+  []
+  [Outlet_T]
+    type = FVConstantScalarOutflowBC
+    velocity = '${vel} 0 0'
+    variable = T
+    boundary = 'right'
+  []
+[]
+```
+
+finaly we push the temperature field to Squirrel.
+
+```
+    [push_T]
+        type = MultiAppGeneralFieldShapeEvaluationTransfer
+        to_multi_app = Squirrel 
+        source_variable = T 
+        variable = T
+        execute_on= "timestep_end initial"
+    [] 
+```
+
+In the Squirrel_SS.i file we have to initialize the coresponding AuxVariable:
+
+```
+[AuxVariables]
+  [T]
+      family = MONOMIAL
+      order = CONSTANT
+      fv = true
+  []
+[]
+```
 
 
+## The transient caclulations
+
+In the transient calculation the channel.i file pulls the changed flux from Squirrel.i
+
+```
+[Transfers]
+    [push_T]
+        type = MultiAppGeneralFieldShapeEvaluationTransfer
+        to_multi_app = Squirrel 
+        source_variable = T 
+        variable = T
+        execute_on= "timestep_end initial"
+    [] 
+[]
+```
 
 
+In the Squirrel.i file we initalize a reference temperature. 
 
 
+```
+[AuxVariables]
+  [T_ref]
+      family = MONOMIAL
+      order = CONSTANT
+      fv = true
+      initial_from_file_var = 'T'
+  []
+[]
+```
+
+The weighted temperature difference is calculated as a postprocessor. 
+
+```
+[Postprocessors]
+ [rho_T]
+   type = TemperatureFeedbackInt
+   variable = T
+   flux = flux
+   T_ref = T_ref
+   total_rho = ${fparse -10e-5}
+   Norm = flux_int
+   block = 1
+ []
+[]
+```
+
+The calculated change in reactivity is used in the power equation:
 
 
+```
+  [expression]
+    type = ParsedODEKernel
+    expression = '-(rho_external + rho_T + rho_insertion-beta)/LAMBDA*power_scalar-S/LAMBDA'
+    constant_expressions = '${fparse rho_external} ${fparse beta} ${fparse LAMBDA}'
+    constant_names = 'rho_external beta LAMBDA'
+    variable = power_scalar
+    postprocessors = 'S rho_insertion rho_T'
+  []
+
+```
 
 
 
