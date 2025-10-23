@@ -41,7 +41,7 @@ If you just want to run the steady state and transient calculation:
 ```
 That will give you a steady state soultion. From this solution the transient will restart. The transient is a 10 pcm insertion, without any temperature feedback.
 
-## The steady state caclulations
+# The steady state caclulations
 
 Beginning with the channel_SS.i file:
 Two variables are defined. The DNP concentration "C" with one group and the flux "flux" in the channel. 
@@ -616,12 +616,13 @@ The calculated change in reactivity is used in the power equation:
 
 ```
 
+The resulting power is lower compared to the transient without feedback.
 
 
-
-
-
-
-
-
-
+```
+Squirrel0: Scalar Variable Values:
+Squirrel0: +----------------+----------------+
+Squirrel0: | time           | power_scalar   |
+Squirrel0: +----------------+----------------+
+Squirrel0: |   1.000000e+01 |   1.003838e+00 |
+```
