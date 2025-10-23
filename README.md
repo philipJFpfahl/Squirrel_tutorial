@@ -209,7 +209,3 @@ Example placeholder (insert your plot later):
 * Ensure correct linking of output and restart files.
 * The examples are simplified but illustrate the main Squirrel–MOOSE coupling workflow.
 
----
-
-Would you like me to **generate example plots (mock results)** for the result section (e.g., simple matplotlib plots of `power_scalar` vs. time for both cases)?
-If you upload or describe the numerical results (e.g., time/power pairs), I can create realistic figures for inclusion.
