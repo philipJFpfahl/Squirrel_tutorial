@@ -1,91 +1,46 @@
-Here’s a more structured and consistent version of your README with added file labels, formatting, and equations preserved exactly as requested:
+Here's the formatted README based on the example you provided:
 
 ---
 
-# 🐿️ Squirrel Tutorial
+# 🐿️ Squirrel Tutorial: 1D Channel & Temperature Feedback
 
-This repository provides a simple tutorial demonstrating the use of **Squirrel**, a framework for modeling delayed neutron precursor (DNP) transport and feedback effects in flowing-fuel reactor systems.
-
-📘 For downloading Squirrel, theoretical background, and kernel explanations, see the official repository:
-🔗 [Squirrel GitHub – by Philip Pfahl](https://github.com/philipJFpfahl/Squirrel)
-
-These input files were originally part of a DTU university course.
-**Author:** Philip Pfahl
-**Contact:** [Philip.j.f.pfahl@gmail.com](mailto:Philip.j.f.pfahl@gmail.com)
+This repository provides input files for **Squirrel**, a framework used to model delayed neutron precursor (DNP) transport and feedback effects in molten salt reactors (MSRs) with flowing fuel.
 
 ---
 
 ## Overview
 
-This tutorial demonstrates the basic application of Squirrel using a **simplified 1D channel model**. Two setups are included:
+This tutorial includes two main configurations:
 
-1. **1D channel** – neglecting temperature feedback
-2. **1D channel (temp)** – including temperature feedback
+1. **1D channel** – Basic model without temperature feedback
+2. **1D channel (temp)** – Model including temperature feedback
 
-Each setup illustrates how to compute a **steady-state** solution for a molten salt reactor with flowing fuel and how to **run transient simulations** from that steady-state condition.
+The **1D channel** demonstrates a steady-state calculation followed by a transient simulation. The **1D channel (temp)** extends this by including temperature-dependent feedback in the calculations.
+
+Each configuration contains both steady-state and transient input files, with the transient simulations being based on the outputs from the steady-state simulations.
 
 ### 📂 Input File Overview
 
-| Input File                   | Description                                            |
-| ---------------------------- | ------------------------------------------------------ |
-| **`channel_SS.i`**           | Steady-state DNP and flux calculation                  |
-| **`Squirrel_SS.i`**          | Reactivity loss postprocessing for steady state        |
-| **`channel.i`**              | Transient simulation restart (no temperature feedback) |
-| **`Squirrel.i`**             | Power evolution and flux scaling during transient      |
-| **`channel_SS.i`** *(temp)*  | Steady-state with temperature variable                 |
-| **`Squirrel_SS.i`** *(temp)* | Steady-state with thermal feedback enabled             |
-| **`channel.i`** *(temp)*     | Transient with temperature feedback                    |
-| **`Squirrel.i`** *(temp)*    | Transient calculation with thermal reactivity effects  |
+| Input File                          | Description                                     |
+| ----------------------------------- | ----------------------------------------------- |
+| **`1D_channel/channel_SS.i`**       | Steady-state DNP and flux calculation           |
+| **`1D_channel/Squirrel_SS.i`**      | Reactivity loss postprocessing for steady state |
+| **`1D_channel/channel.i`**          | Transient simulation (no temperature feedback)  |
+| **`1D_channel/Squirrel.i`**         | Power evolution during transient                |
+| **`1D_channel_temp/channel_SS.i`**  | Steady-state with temperature feedback          |
+| **`1D_channel_temp/Squirrel_SS.i`** | Steady-state with thermal feedback              |
+| **`1D_channel_temp/channel.i`**     | Transient with temperature feedback             |
+| **`1D_channel_temp/Squirrel.i`**    | Transient with thermal reactivity effects       |
 
-### Run Instructions
+---
 
-To run the steady-state and transient calculations:
+## 1D Channel: Steady-State Calculations
 
-```bash
-./squirrel-opt -i channel_SS.i
-./squirrel-opt -i channel.i
+### Steady-State Setup (`channel_SS.i`)
+
+In the **`channel_SS.i`** file, we define two variables: the DNP concentration, `C`, and the flux, `flux`. These are both assumed to be constant throughout the steady-state solution.
+
 ```
-
-These commands will produce a steady-state solution from **`channel_SS.i`**, which is then used to restart the transient simulation in **`channel.i`**.
-The transient represents a **10 pcm positive reactivity insertion**, without temperature feedback.
-
----
-
-## 🧩 Model Description
-
-The model consists of two 1D regions of equal length (**L/2**):
-
-* A **critical core region** (where fission occurs)
-* A **non-critical out-of-core region**
-
-```ini
-[Mesh]
-    [cmbn]
-        type = CartesianMeshGenerator
-        dim = 1
-        dx = '${fparse L/2} ${fparse L/2}'
-        ix = '${nx} ${nx}'
-        subdomain_id = '1 0'
-    []
-[]
-```
-
-A constant flow of fuel salt from left to right is assumed.
-
----
-
-### 1D channel
-
-This folder contains four input files. The two input files with the subscript `_SS` are for steady-state calculations and need to be run first. The outputs are used as inputs for the transient simulation.
-
----
-
-## The Steady-State Calculations
-
-**Starting with the `channel_SS.i` file:**
-Two variables are defined. The DNP concentration "C" with one group, and the flux "flux" in the channel.
-
-```ini
 [Variables]
   [C]
       family = MONOMIAL
@@ -95,26 +50,28 @@ Two variables are defined. The DNP concentration "C" with one group, and the flu
 []
 
 [AuxVariables]
-    [flux]
-        family = MONOMIAL
-        order = CONSTANT
-        fv = true
-    []
+  [flux]
+      family = MONOMIAL
+      order = CONSTANT
+      fv = true
+  []
 []
 ```
 
-Now we define the Kernels to solve:
+### Kernels for Steady-State Solution
 
-$$\frac{\partial  c(x,t)}{\partial t}   =  \beta \cdot \text{flux}(x) - \lambda \cdot c(x,t) - \frac{\partial}{\partial x} \mathbf{U}(x,t) \cdot c(x,t) $$
+The equation governing the DNP concentration is:
 
-```ini
+$$\frac{\partial c(x,t)}{\partial t} =  \beta , flux(x) - \lambda , c(x,t) - \frac{\partial}{\partial x}\mathbf{U}(x,t) c(x,t)$$
+
+The following kernels are used to solve for this:
+
+```
 [FVKernels]
-  #Time kernel
   [C_time]
     type = FVTimeKernel
     variable = C
   []
-  #DNP production kernel
   [C_external]
     type = FVCoupledForce
     variable = C
@@ -122,14 +79,12 @@ $$\frac{\partial  c(x,t)}{\partial t}   =  \beta \cdot \text{flux}(x) - \lambda 
     v = 'flux'
     block = '1'
   []
-  #DNP decay kernel
   [C_interal]
     type = FVCoupledForce
     variable = C
-    coef =   ${fparse -lambda}
+    coef = ${fparse -lambda}
     v = C
   []
-  #Advection kernel
   [C_advection]
     type = FVAdvection
     variable = C
@@ -138,12 +93,9 @@ $$\frac{\partial  c(x,t)}{\partial t}   =  \beta \cdot \text{flux}(x) - \lambda 
 []
 ```
 
-There is a time kernel, a production kernel (restricted to block 1, where the reactor is critical), a decay kernel, and an advection kernel.
-We will assume that the flux and the fission rate are the same. That is not correct, but could be corrected with a simple factor that cancels in the equation.
+Boundary conditions for the advected DNP concentration are defined as follows:
 
-Likewise, we will define an outflow and inflow boundary condition for the advected DNP concentration.
-
-```ini
+```
 [FVBCs]
   [inlet_C]
     type = FVFunctorDirichletBC
@@ -160,9 +112,9 @@ Likewise, we will define an outflow and inflow boundary condition for the advect
 []
 ```
 
-And we define the shape of the flux on the whole domain.
+Flux initialization:
 
-```ini
+```
 [FVICs]
   [flux_ic]
     type = FVFunctionIC
@@ -181,22 +133,24 @@ And we define the shape of the flux on the whole domain.
 []
 ```
 
-With the time stepper, we let the solution converge.
+Time stepper setup for convergence:
 
-```ini
+```
 [TimeStepper]
-    type = IterationAdaptiveDT
-    dt = 0.001
-    optimal_iterations = 20
-    iteration_window = 2
-    growth_factor = 2
-    cutback_factor = 0.5
+  type = IterationAdaptiveDT
+  dt = 0.001
+  optimal_iterations = 20
+  iteration_window = 2
+  growth_factor = 2
+  cutback_factor = 0.5
 []
 ```
 
-The DNP concentration will be sent to the `Squirrel_SS.i` file.
+### Reactivity Loss Calculation in `Squirrel_SS.i`
 
-```ini
+The DNP concentration is transferred to **`Squirrel_SS.i`** for reactivity loss calculations:
+
+```
 [MultiApps]
     [Squirrel]
       type = TransientMultiApp
@@ -217,30 +171,9 @@ The DNP concentration will be sent to the `Squirrel_SS.i` file.
 []
 ```
 
----
+Post-processing to calculate static reactivity loss and weighted DNP source:
 
-### In the `Squirrel_SS.i` file:
-
-The transferred information is used to calculate the static reactivity loss.
-
-We define the same variable on the same mesh, but both are known values.
-
-```ini
-[AuxVariables]
-  [flux]
-    type = MooseVariableFVReal
-  []
-  [C]
-      family = MONOMIAL
-      order = CONSTANT
-      fv = true
-  []
-[]
 ```
-
-Using the postprocessors of Squirrel, we can calculate the static reactivity loss due to the flowing fuel `Rho_flow` and the spatially weighted (or effective) DNP source `S`.
-
-```ini
 [Postprocessors]
  [Rho_Flow]
   type = ParsedPostprocessor
@@ -269,9 +202,9 @@ Using the postprocessors of Squirrel, we can calculate the static reactivity los
 []
 ```
 
-In this example, the loss should be **121.7 pcm**.
+Reactivity loss after ~1000s:
 
-```bash
+```
 Squirrel0: +----------------+----------------+----------------+----------------+
 Squirrel0: | time           | B              | Rho_Flow       | S              |
 Squirrel0: +----------------+----------------+----------------+----------------+
@@ -279,35 +212,131 @@ Squirrel0: |   1.048575e+03 |   7.905694e-01 |   1.217096e-03 |   4.782904e-03 |
 Squirrel0: +----------------+----------------+----------------+----------------+
 ```
 
-We can see that it is reached after **~1000s**.
+### Transient Setup
 
----
+For the transient simulation (`channel.i`), we restart from **`channel_SS_out.e`** and pull the updated flux from **`Squirrel.i`**:
 
-## The Transient Calculation
-
-For the `channel.i` file:
-
-Not much is changing since the thermal hydraulics stay the same.
-We will now do a normal restart using the `channel_SS_out.e` file.
-
-```ini
+```
 [Mesh]
   file = 'channel_SS_out.e'
 []
-```
 
-```ini
 [Problem]
     kernel_coverage_check=false
     allow_initial_conditions_with_restart = true
 []
-```
 
-```ini
 [Variables]
   [C]
       family = MONOMIAL
       order = CONSTANT
       fv = true
-      initial_from_file
+      initial_from_file_var = 'C'
+  []
+[]
+
+[AuxVariables]
+    [flux]
+        family = MONOMIAL
+        order = CONSTANT
+        fv = true
+        initial_from_file_var = 'flux'
+    []
+[]
+```
+
+Updated flux is pulled from **`Squirrel.i`**:
+
+```
+[MultiApps]
+    [Squirrel]
+      type = TransientMultiApp
+      input_files = "Squirrel.i"
+      execute_on= "timestep_end "
+      sub_cycling = true
+    []
+[]
+
+[Transfers]
+    [push_C]
+        type = MultiAppGeneralFieldShapeEvaluationTransfer
+        to_multi_app = Squirrel 
+        source_variable = C 
+        variable = C
+        execute_on= "timestep_end initial"
+    [] 
+    [pull_flux]
+        type = MultiAppGeneralFieldShapeEvaluationTransfer
+        from_multi_app = Squirrel 
+        source_variable = flux_scaled 
+        variable = flux
+        execute_on= "timestep_end initial"
+    [] 
+[]
+```
+
+The power equation is solved using an external reactivity insertion to compensate for the DNP advection:
+
+```
+[Variables]
+  [power_scalar]
+    family = SCALAR
+    order = FIRST
+    initial_condition = 1
+  []
+[]
+
+[ScalarKernels]
+  [Dt]
+    type = ODETimeDerivative
+    variable = power_scalar
+  []
+  [expression]
+    type = ParsedODEKernel
+    expression = '-(rho_external+rho_insertion-beta)/LAMBDA*power_scalar-S/LAMBDA'
+    constant_expressions = '${fparse rho_external} ${fparse beta} ${fparse LAMBDA}'
+    constant_names = 'rho_external beta LAMBDA'
+    variable = power_scalar
+    postprocessors = 'S rho_insertion '
+  []
+[]
+```
+
+Power evolution:
+
+```
+Squirrel0: Scalar Variable Values:
+Squirrel0: +----------------+----------------+
+Squirrel0: | time           | power_scalar   |
+Squirrel0: +----------------+----------------+
+Squirrel0: |   1.000000e+01 |   1.318840e+00 |
+Squirrel0: +----------------+----------------+
+```
+
+---
+
+## 1D Channel with Temperature Feedback
+
+This configuration builds on the **1D channel** setup by adding a temperature variable and corresponding feedback effects.
+
+### Steady-State Setup (`channel_SS.i`)
+
+Variables and kernels are similar to the previous setup, but with the addition of a temperature variable:
+
+```
+[Variables]
+  [T]
+      family = MONOMIAL
+      order = CONSTANT
+      fv = true
+  []
+[]
+```
+
+### Temperature Feedback Kernels
+
+```
+[FVKernels]
+  [T_time]
+    type = FV
 ```
