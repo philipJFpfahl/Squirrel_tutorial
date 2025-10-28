@@ -18,8 +18,8 @@ These input files were originally part of a DTU university course.
 
 This tutorial demonstrates the basic application of Squirrel using a **simplified 1D channel model**. Two setups are included:
 
-1. **1D channel** – neglecting temperature feedback
-2. **1D channel (temp)** – including temperature feedback
+1. **1D channel kinetics** – neglecting temperature feedback
+2. **1D channel dynamics** – including temperature feedback
 
 Each setup illustrates how to compute a **steady-state** solution for a molten salt reactor with flowing fuel and how to **run transient simulations** from that steady-state condition.
 
