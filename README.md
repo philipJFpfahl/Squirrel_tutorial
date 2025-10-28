@@ -9,8 +9,9 @@ These input files were originally part of a DTU university course.
 **Author:** Philip Pfahl
 **Contact:** [Philip.j.f.pfahl@gmail.com](mailto:Philip.j.f.pfahl@gmail.com)
 
-If you use the Squirrel app considder citing: 
+🐿️ If you use the Squirrel app considder citing: 
 🔗 [https://doi.org/10.1080/00295639.2025.2494182](https://doi.org/10.1080/00295639.2025.2494182)
+
 ---
 
 ## Overview
