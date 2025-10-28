@@ -27,14 +27,14 @@ Each setup illustrates how to compute a **steady-state** solution for a molten s
 
 | Input File                   | Description                                            |
 | ---------------------------- | ------------------------------------------------------ |
-| **`1D_channel/channel_SS.i`**           | Steady-state DNP and flux calculation                  |
-| **`1D_channel/Squirrel_SS.i`**          | Reactivity loss postprocessing for steady state        |
-| **`1D_channel/channel.i`**              | Transient simulation restart (no temperature feedback) |
-| **`1D_channel/Squirrel.i`**             | Power evolution and flux scaling during transient      |
-| **`1D_channel_temp/channel_SS.i`**      | Steady-state with temperature variable                 |
-| **`1D_channel_temp/Squirrel_SS.i`**     | Steady-state with thermal feedback enabled             |
-| **`1D_channel_temp/channel.i`**         | Transient with temperature feedback                    |
-| **`1D_channel_temp/Squirrel.i`**        | Transient calculation with thermal reactivity effects  |
+| **`1D_channel/channel_SS.i`**           | **`Thermal-Hydaulics`** Steady-state DNP and flux calculation                  |
+| **`1D_channel/Squirrel_SS.i`**          | **`Neutronics`** Reactivity loss postprocessing for steady state        |
+| **`1D_channel/channel.i`**              | **`Thermal-Hydaulics`** Transient simulation restart (no temperature feedback) |
+| **`1D_channel/Squirrel.i`**             | **`Neutronics`** Power evolution and flux scaling during transient      |
+| **`1D_channel_temp/channel_SS.i`**      | **`Thermal-Hydaulics`** Steady-state with temperature variable                 |
+| **`1D_channel_temp/Squirrel_SS.i`**     | **`Neutronics`** Steady-state with thermal feedback enabled             |
+| **`1D_channel_temp/channel.i`**         | **`Thermal-Hydaulics`** Transient with temperature feedback                    |
+| **`1D_channel_temp/Squirrel.i`**        | **`Neutronics`** Transient calculation with thermal reactivity effects  |
 
 ### Run Instructions
 
@@ -49,7 +49,7 @@ These commands will produce a steady-state solution from **`channel_SS.i`**, whi
 The transient represents a **10 pcm positive reactivity insertion**, without temperature feedback.
 
 ---
-## 🧩 Model Description
+# 🧩 Model Description
 
 The model consists of two 1D regions of equal length (**L/2**):
 
@@ -68,14 +68,14 @@ The model consists of two 1D regions of equal length (**L/2**):
 []
 ```
 
-A constant flow of fuel salt from left to right is assumed.
+A constant flow of fuel salt from left to right and continuous boundary conditions are assumed.
 
 ---
-## 1D Channel: Steady-State Calculations
+# 1D Channel: Steady-State Calculations
 
-### Steady-State Setup (`channel_SS.i`)
+### Steady-State Thermal-Hydaulics (`channel_SS.i`)
 
-In the **`channel_SS.i`** file, we define two variables: the DNP concentration, `C`, and the flux, `flux`. These are both assumed to be constant throughout the steady-state solution.
+In the **`channel_SS.i`** file, we define two variables: the DNP concentration, `C`, and the flux, `flux`. The flux is assumed to be constant throughout the steady-state solution.
 
 ```ini
 [Variables]
@@ -95,7 +95,6 @@ In the **`channel_SS.i`** file, we define two variables: the DNP concentration, 
 []
 ```
 
-### Kernels for Steady-State Solution
 
 The equation governing the DNP concentration is:
 
@@ -183,8 +182,6 @@ Time stepper setup for convergence:
 []
 ```
 
-### Reactivity Loss Calculation in `Squirrel_SS.i`
-
 The DNP concentration is transferred to **`Squirrel_SS.i`** for reactivity loss calculations:
 
 ```ini
@@ -208,7 +205,8 @@ The DNP concentration is transferred to **`Squirrel_SS.i`** for reactivity loss 
 []
 ```
 
-Post-processing to calculate static reactivity loss and weighted DNP source:
+### Steady-State Neutronics (`Squirrel_SS.i`)
+In the **`Squirrel_SS.i`** the Post-processing is used to calculate static reactivity loss and weighted DNP source:
 
 ```ini
 [Postprocessors]
@@ -248,10 +246,10 @@ Squirrel0: +----------------+----------------+----------------+----------------+
 Squirrel0: |   1.048575e+03 |   7.905694e-01 |   1.217096e-03 |   4.782904e-03 |
 Squirrel0: +----------------+----------------+----------------+----------------+
 ```
+## 1D Channel: Transient Calculations
 
-### Transient Setup
-
-For the transient simulation (`channel.i`), we restart from **`channel_SS_out.e`** and pull the updated flux from **`Squirrel.i`**:
+### Transient Thermal-Hydraulics setup (`channel.i`)
+For the transient Thermal-Hydraulics simulation (`channel.i`), we restart from **`channel_SS_out.e`**:
 
 ```ini
 [Mesh]
@@ -282,7 +280,7 @@ For the transient simulation (`channel.i`), we restart from **`channel_SS_out.e`
 []
 ```
 
-Updated flux is pulled from **`Squirrel.i`**:
+During the transient the scaled flux is pulled from **`Squirrel.i`**:
 
 ```ini
 [MultiApps]
@@ -312,8 +310,83 @@ Updated flux is pulled from **`Squirrel.i`**:
 []
 ```
 
-The power equation is solved using an external reactivity insertion to compensate for the DNP advection:
+### Transient Neutronics (`Squirrel.i`)
 
+Now we restart from the file 
+
+
+For the transient neutronics simulation (`Squirrel.i`), we restart from **`channel_SS_out_Squirrel0.e`**:
+
+```ini
+[Mesh]
+  file = 'channel_SS_out_Squirrel0.e'
+[]
+[Problem]
+    kernel_coverage_check=false
+    allow_initial_conditions_with_restart = true
+[]
+[AuxVariables]
+  [flux]
+    type = MooseVariableFVReal
+    initial_from_file_var = 'flux'
+  []
+  [C]
+      family = MONOMIAL
+      order = CONSTANT
+      fv = true
+      initial_from_file_var = 'C'
+  []
+  [flux_scaled]
+    type = MooseVariableFVReal
+    initial_from_file_var = 'flux'
+  []
+[]
+```
+
+Additionally we introduce a scaled flux Aux variable, that is updated at each time step. 
+This scaled flux is transfered to the channel.i file.
+
+The scaling is done with an Aux Kerel:
+
+```ini
+[AuxKernels]
+    [power_scaling]
+        type = ScalarMultiplication
+        variable = flux_scaled
+        source_variable = flux 
+        factor = power_scalar
+    []
+[]
+```
+
+An external reactivity insertion scalar is defined to compensate for the DNP advection:
+
+
+```ini
+################################################################################
+# Properties 
+################################################################################
+beta = 600e-5
+lambda = 1
+LAMBDA = 1e-4
+rho_external = 1.217096e-03
+```
+Additionally we introduce a scaled flux, in contrast to the initial flux. This scaled flux is transfered to the channel.i file.
+
+The scaling is done with an Aux Kerel:
+
+```ini
+[AuxKernels]
+    [power_scaling]
+        type = ScalarMultiplication
+        variable = flux_scaled
+        source_variable = flux 
+        factor = power_scalar
+    []
+[]
+```
+
+Now we calucalte the factor or the scalar power. Initially we normalize it to 1.
 ```ini
 [Variables]
   [power_scalar]
@@ -323,6 +396,13 @@ The power equation is solved using an external reactivity insertion to compensat
   []
 []
 
+```
+We then solve the power equation
+
+$$\frac{\text{d} p(t)}{\text{d} t} = \frac{\left(  \rho_{insertion} + \rho_{external} - \beta \right)}{\Lambda} p(t) + \frac{S}{\Lambda}$$
+
+with the MOOSE Scalar Kernel solver:
+```ini
 [ScalarKernels]
   [Dt]
     type = ODETimeDerivative
@@ -339,7 +419,19 @@ The power equation is solved using an external reactivity insertion to compensat
 []
 ```
 
-Power evolution:
+This system should be at steady state for if there is no insertion. We test this with an insertion of 10pcm after 1 s. For that we define a insertion function:
+
+```
+[Functions]
+  [insertion_func]
+    type = PiecewiseConstant
+    xy_data = '0  0
+               1  1e-4'
+  []
+[]
+```
+
+Power at 10s:
 
 ```ini
 Squirrel0: Scalar Variable Values:
@@ -351,19 +443,19 @@ Squirrel0: +----------------+----------------+
 ```
 
 ---
+---
 
+# 1D Channel Temperature Feedback
 
-## 1D Channel Temperature Feedback
+## The steady state caclulations
 
-### The Steady-State Calculations
+### Steady-State Thermal-Hydaulics (`channel_SS.i`)
 
-For this section, we introduce temperature feedback into the system. The setup is similar to the previous one, but now we also need to track the **temperature** as a variable and incorporate it into the system’s feedback.
+We use the same input as we had before, but now with a temperature variable. 
 
-#### Temperature Variables
+We start by defining the variable:
 
-We begin by defining the **temperature** variable in the **[Variables]** block:
-
-```ini
+```
 [Variables]
   [T]
       family = MONOMIAL
@@ -373,26 +465,22 @@ We begin by defining the **temperature** variable in the **[Variables]** block:
 []
 ```
 
-This defines a scalar temperature variable, **T**, which will be used throughout the system.
+And we define a corresponding kernel for the advection of the temperature, the heating in the active core region and the cooling in the heatexchanger. 
 
-#### Advection, Heating, and Cooling
 
-We introduce a set of **kernels** to handle temperature transport and feedback.
-
-* **Advection** of the temperature field:
-
-```ini
+```
 [FVKernels]
+  [T_time]
+    type = FVTimeKernel
+    variable = T
+  []
+  #Advection kernel
   [T_advection]
     type = FVAdvection
     variable = T
     velocity = '${vel} 0 0'
   []
-```
-
-* **Heating** in the active core region, based on the flux variable:
-
-```ini
+  #Heat source Kernel
   [T_heating]
     type = FVCoupledForce
     variable = T
@@ -400,28 +488,21 @@ We introduce a set of **kernels** to handle temperature transport and feedback.
     v = 'flux'
     block = '1'
   []
-```
-
-* **Cooling** in the heat exchanger region:
-
-```ini
+  #HX kernel
   [T_cooling]
     type = FVCoupledForce
     variable = T
-    coef = -0.1
+    coef =   -0.1
     v = T
     block = "0"
   []
 []
 ```
 
-These kernels define the physical behavior of temperature within the system: the **advection** of heat, **heating** in the reactor core, and **cooling** in the heat exchanger.
 
-#### Boundary Conditions for Temperature
+Additionally we define the boundary conditions: 
 
-Next, we set up the boundary conditions for the temperature variable.
-
-```ini
+```
 [FVBCs]
   [inlet_T]
     type = FVFunctorDirichletBC
@@ -438,13 +519,9 @@ Next, we set up the boundary conditions for the temperature variable.
 []
 ```
 
-Here, the **inlet temperature** is defined using a **Dirichlet boundary condition** (with a user-defined **BC_T** functor), and the **outlet temperature** uses a **constant scalar outflow BC**.
+finaly we push the temperature field to Squirrel.
 
-#### Pushing the Temperature Field to Squirrel
-
-We also need to transfer the temperature field to **Squirrel** at each timestep:
-
-```ini
+```
     [push_T]
         type = MultiAppGeneralFieldShapeEvaluationTransfer
         to_multi_app = Squirrel 
@@ -453,22 +530,46 @@ We also need to transfer the temperature field to **Squirrel** at each timestep:
         execute_on= "timestep_end initial"
     [] 
 ```
-
-This ensures that **Squirrel** receives the updated temperature field from the channel simulation.
-
 ---
 
-### The Transient Calculations
+### Steady-State Neutronics (`Squirrel_SS.i`)
+In the **`Squirrel_SS.i`**  we have to initialize the coresponding AuxVariable:
 
-Now we move to the transient setup, where we track how the system behaves over time, with the inclusion of **temperature feedback**. In this section, **Squirrel** is responsible for receiving the temperature data and applying it to adjust the reactor's reactivity.
+```
+[AuxVariables]
+  [T]
+      family = MONOMIAL
+      order = CONSTANT
+      fv = true
+  []
+[]
+```
 
-#### Restart and Temperature Initialization
 
-We begin by restarting the transient calculation using the **steady-state solution** from the **`channel_SS_out.e`** file, which now includes the updated temperature field.
+## The transient caclulations
 
-In the **Squirrel.i** file, we initialize the temperature field:
+### Transient Thermal-Hydraulics setup (`channel.i`)
+For the transient Thermal-Hydraulics simulation (`channel.i`), we restart from **`channel_SS_out.e`**:
+In the transient calculation the channel.i file pulls the changed flux from Squirrel.i
 
-```ini
+```
+[Transfers]
+    [pull_flux]
+        type = MultiAppGeneralFieldShapeEvaluationTransfer
+        from_multi_app = Squirrel 
+        source_variable = flux_scaled 
+        variable = flux
+        execute_on= "timestep_end initial"
+    [] 
+[]
+```
+
+
+### Transient Neutronics (`Squirrel.i`)
+In the **`Squirrel.i`** file we initalize a reference temperature. 
+
+
+```
 [AuxVariables]
   [T_ref]
       family = MONOMIAL
@@ -479,57 +580,44 @@ In the **Squirrel.i** file, we initialize the temperature field:
 []
 ```
 
-Here, **T_ref** will serve as the reference temperature used to calculate the reactivity feedback.
+The weighted temperature difference is calculated as a postprocessor. 
 
-#### Temperature Feedback and Reactivity
-
-We introduce the **temperature feedback** effect through a postprocessor that computes the change in reactivity due to the temperature field. The reactivity feedback is computed based on the temperature difference between the reference temperature and the current temperature:
-
-```ini
+```
 [Postprocessors]
-  [rho_T]
-    type = TemperatureFeedbackInt
-    variable = T
-    flux = flux
-    T_ref = T_ref
-    total_rho = ${fparse -10e-5}
-    Norm = flux_int
-    block = 1
-  []
+ [rho_T]
+   type = TemperatureFeedbackInt
+   variable = T
+   flux = flux
+   T_ref = T_ref
+   total_rho = ${fparse -10e-5}
+   Norm = flux_int
+   block = 1
+ []
 []
 ```
 
-This postprocessor calculates the temperature feedback, where:
+The calculated change in reactivity is used in the power equation:
 
-* **`rho_T`** is the reactivity change due to temperature,
-* **`flux_int`** is the integral of the flux over the volume,
-* **`T_ref`** is the reference temperature, and
-* **`total_rho`** is the total reactivity change, scaled by a constant.
 
-#### Reactivity in the Power Equation
-
-The feedback in reactivity is used to adjust the power equation. The temperature-dependent reactivity change is incorporated into the differential equation for power:
-
-```ini
+```
   [expression]
     type = ParsedODEKernel
-    expression = '-(rho_external+rho_insertion-beta)/LAMBDA*power_scalar-S/LAMBDA'
+    expression = '-(rho_external + rho_T + rho_insertion-beta)/LAMBDA*power_scalar-S/LAMBDA'
     constant_expressions = '${fparse rho_external} ${fparse beta} ${fparse LAMBDA}'
     constant_names = 'rho_external beta LAMBDA'
     variable = power_scalar
-    postprocessors = 'S rho_insertion '
+    postprocessors = 'S rho_insertion rho_T'
   []
-[]
+
 ```
 
-This ensures that the reactivity change, based on the temperature feedback, will influence the power evolution over time.
-
----
 The resulting power is lower compared to the transient without feedback.
 
+
+```
 Squirrel0: Scalar Variable Values:
 Squirrel0: +----------------+----------------+
 Squirrel0: | time           | power_scalar   |
 Squirrel0: +----------------+----------------+
 Squirrel0: |   1.000000e+01 |   1.003838e+00 |
-
+```
