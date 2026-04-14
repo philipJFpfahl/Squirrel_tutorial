@@ -1,15 +1,15 @@
-# 🐿️ Squirrel Tutorial
+# Squirrel Tutorial
 
 This repository provides a simple tutorial demonstrating the use of **Squirrel**, a framework for modeling delayed neutron precursor (DNP) transport and feedback effects in flowing-fuel reactor systems.
 
-📘 For downloading Squirrel, theoretical background, and kernel explanations, see the official repository:
+For downloading Squirrel, theoretical background, and kernel explanations, see the official repository:
 🔗 [Squirrel GitHub – by Philip Pfahl](https://github.com/philipJFpfahl/Squirrel)
 
 These input files were originally part of a DTU university course.
 **Author:** Philip Pfahl
 **Contact:** [Philip.j.f.pfahl@gmail.com](mailto:Philip.j.f.pfahl@gmail.com)
 
-🐿️ If you use the Squirrel app considder citing: 
+ If you use the Squirrel app considder citing: 
 🔗 [https://doi.org/10.1080/00295639.2025.2494182](https://doi.org/10.1080/00295639.2025.2494182)
 
 ---
@@ -23,7 +23,7 @@ This tutorial demonstrates the basic application of Squirrel using a **simplifie
 
 Each setup illustrates how to compute a **steady-state** solution for a molten salt reactor with flowing fuel and how to **run transient simulations** from that steady-state condition.
 
-### 📂 Input File Overview
+### Input File Overview
 
 | Input File                   | Description                                            |
 | ---------------------------- | ------------------------------------------------------ |
@@ -49,7 +49,7 @@ These commands will produce a steady-state solution from **`channel_SS.i`**, whi
 The transient represents a **10 pcm positive reactivity insertion**, without temperature feedback.
 
 ---
-# 🧩 Model Description
+# Model Description
 
 The model consists of two 1D regions of equal length (**L/2**):
 
